@@ -16,42 +16,8 @@
     />
 </head>
 <body>
-    <header>
-        <div class="container">
-            <a href="index.html" class="logo">
-                <img src="assets/imgs/logo.svg" alt="logo">
-            </a>
+    <?php require "header.php";?>
 
-            <nav>
-                <ul>
-                    <li><a href="index.html" class="active">ACCEUIL</a></li>
-                    <li><a href="formation.html" class="enable">FORMATION</a></li>
-                    <li><a href="#" class="enable">RESOURCES</a></li>
-                    <li><a href="#" class="enable">CONTACT</a></li>
-                </ul>
-            </nav>
-
-            <a href="#" class="login">
-                <i class="fa-solid fa-right-to-bracket"></i>
-                <p>Commencer</p>
-            </a>
-            <i class="fas fa-bars toggle-menu" id="iconMenu"></i>
-            <div class="drop-menu">
-                <ul>
-                    <li><a href="index.html" class="active">ACCEUIL</a></li>
-                    <li><a href="formation.html" class="enable">FORMAION</a></li>
-                    <li><a href="#" class="enable">RESOURCES</a></li>
-                    <li><a href="#" class="enable">CONTACT</a></li>
-                    <li>
-                        <a href="#" class="login">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            <p>Commencer</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </header>
     
     <section class="according">
         <div class="according-item">
