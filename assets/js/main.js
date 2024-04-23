@@ -33,5 +33,3 @@ const iconMenu = document.getElementById("iconMenu");
 iconMenu.addEventListener("click" , event => {
     dropMenu.classList.toggle("drop-menu-Active");
 })
-
-console.log(dropMenu.classList);

@@ -13,7 +13,7 @@
                 </ul>
             </nav>
 
-            <a href="#" class="login">
+            <a href="login.php" class="login">
                 <i class="fa-solid fa-right-to-bracket"></i>
                 <p>Commencer</p>
             </a>
@@ -25,7 +25,7 @@
                     <li><a href="#" class="enable">RESOURCES</a></li>
                     <li><a href="#" class="enable">CONTACT</a></li>
                     <li>
-                        <a href="#" class="login">
+                        <a href="login.php" class="login">
                             <i class="fa-solid fa-right-to-bracket"></i>
                             <p>Commencer</p>
                         </a>
