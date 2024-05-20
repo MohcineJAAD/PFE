@@ -15,38 +15,34 @@
         />
         <title>E-BTS</title>
     </head>
-<body>
-    <?php require "header.php"; ?>
-    <section class="landing">
-        <div class="">
-            <form action="" method="post" class="login">
-                <h2 class="title">se connecter</h2>
-                <div class="input-filde">
-                    <label for="user">
-                        <i class="fa-regular fa-circle-user"></i>
-                        Utilisateur
-                    </label>
-                    <input type="text" name="userName" id="user" placeholder="Entrez identifiant">
+    <body>
+        <?php require "header.php"; ?>
+        <section class="landing">
+            <div class="container">
+                <div class="illustration">
+                    <img src="assets/imgs/ullistrationLogin.svg" alt="Illustration">
                 </div>
-                <div class="input-filde">
-                    <label for="pass">
-                        <i class="fa-solid fa-lock"></i>
-                        Mot de Passe
-                    </label>
-                    <input type="password" name="password" id="pass" placeholder="Entrez mot de passe">
+                <div class="form-container">
+                    <form action="" method="post" class="login">
+                        <h2 class="title">Se connecter</h2>
+                        <div class="input-filde">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <input type="text" name="userName" id="user" placeholder="Entrez identifiant">
+                        </div>
+                        <div class="input-filde">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" name="password" id="pass" placeholder="Entrez mot de passe">
+                            <img src="assets/imgs/hide.png" alt="password show" id="eye">
+                        </div>
+                        <p class="alert">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            Connexion réservée aux étudiants en BTS uniquement
+                        </p>
+                        <input type="submit" value="Se connecter" class="btn">
+                        <p class="login-prob">Si vous rencontrez un problème lors de la connexion, veuillez <span>cliquer içi</span></p>
+                    </form>
                 </div>
-                <div class="input-filde">
-                    <input type="checkbox" name="display" id="true">
-                    <label for="true">Affichage du mot de passe</label>
-                </div>
-                <p class="alert">
-                    <i class="fa-solid fa-circle-exclamation"></i>
-                    Connexion réservée aux étudiants en BTS uniquement
-                </p>
-                <input type="submit" value="Se connecter" class="btn solid">
-                <p class="login-prob">Si vous rencontrez un problème lors de la connexion, veuillez <span>cliquer içi</span></p>
-            </form>
-        </div>
-    </section>
-</body>
+            </div>
+        </section>
+    </body>
 </html>

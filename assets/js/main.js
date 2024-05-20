@@ -28,8 +28,33 @@ accordingItemHeaders.forEach(accordingItemHeader => {
 });
 
 // Action of Hamburger drop Menu
-const dropMenu = document.querySelector(".drop-menu");
-const iconMenu = document.getElementById("iconMenu");
-iconMenu.addEventListener("click" , event => {
-    dropMenu.classList.toggle("drop-menu-Active");
-})
+// const dropMenu = document.querySelector(".drop-menu");
+// const iconMenu = document.getElementById("iconMenu");
+// iconMenu.addEventListener("click" , event => {
+//     dropMenu.classList.toggle("drop-menu-Active");
+// })
+
+document.addEventListener("DOMContentLoaded", function() {
+    const iconMenu = document.getElementById("iconMenu");
+    const dropMenu = document.getElementById("dropMenu");
+
+    iconMenu.addEventListener("click", function() {
+        dropMenu.classList.toggle("drop-menu-Active");
+    });
+});
+
+
+
+// hide or show password
+const showPass = document.querySelector("#eye");
+const inputPass = document.querySelector("#pass");
+
+showPass.addEventListener("click", function() {
+    if (inputPass.type === "password") {
+        inputPass.type = "text";
+        this.src = "assets/imgs/show.png";
+    } else {
+        inputPass.type = "password";
+        this.src = "assets/imgs/hide.png";
+    }
+});
