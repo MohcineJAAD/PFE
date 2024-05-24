@@ -31,5 +31,87 @@
             </div>
         </div>
     </section>
+
+    <section class="statistique">
+        <div class="box-container">
+            <div class="box">
+                <i class="fa-solid fa-graduation-cap" style="color: #0075ff;"></i>
+                <div class="content">
+                    <h3><span class="num" data-target="20">0</span>+</h3>
+                    <p>filières</p>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fa-solid fa-user-graduate" style="color: #0075ff;"></i>
+                <div class="content">
+                    <h3><span class="num" data-target="4">0</span>K+</h3>
+                    <p>etudient</p>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fa-solid fa-building" style="color: #0075ff;"></i>
+                <div class="content">
+                    <h3><span class="num" data-target="30">0</span>+</h3>
+                    <p>centre</p>
+                </div>
+            </div>
+            <div class="box">
+                <i class="fa-solid fa-chalkboard-user" style="color: #0075ff;"></i>
+                <div class="content">
+                    <h3><span class="num" data-target="700">0</span>+</h3>
+                    <p>Encadrement</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const counters = document.querySelectorAll('.num');
+            const boxes = document.querySelectorAll('.box');
+
+            function countUp(counter) {
+                const target = +counter.getAttribute('data-target');
+                const speed = 2000;
+
+                const updateCount = () => {
+                    const count = +counter.innerText;
+                    const increment = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + increment);
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+
+                updateCount();
+            }
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        const counter = entry.target.querySelector('.num');
+                        if (counter) {
+                            countUp(counter);
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+
+            boxes.forEach(box => {
+                observer.observe(box);
+            });
+        });
+    </script>
+
+
 </body>
 </html>

@@ -20,7 +20,7 @@
         <section class="landing">
             <div class="container">
                 <div class="illustration">
-                    <img src="assets/imgs/ullistrationLogin.svg" alt="Illustration">
+                    <img src="assets/imgs/login.png" alt="Illustration">
                 </div>
                 <div class="form-container">
                     <form action="" method="post" class="login">

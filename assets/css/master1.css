@@ -4,7 +4,7 @@
 }
 
 :root {
-    --color-60: #0075FF;
+    --color-60: #0075ff;
     --color-60-Tr: #0077ff80;
     --color-30: #fff;
     --color-10: #333333;
@@ -292,15 +292,77 @@ header .toggle-menu {
     border-radius: 25px;
     transition: background-color 0.3s, color 0.3s;
     cursor: pointer;
-    margin-top: 20px; /* Add margin to separate the button from the text */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for prominence */
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .event-button:hover {
     background-color: var(--color-60);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 /*=============End index landin page===================*/
+
+/*=============statistique section===================*/
+/* Container and Box Styling */
+/* Existing CSS */
+.statistique {
+    padding: 60px 0;
+}
+
+.statistique .box-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.statistique .box {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: .5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(50px);
+    width: 17rem;
+}
+
+.statistique .box.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.statistique .box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.statistique .box i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.statistique .box h3 {
+    font-size: 2rem;
+    color: #0075ff;
+    margin: 0;
+}
+
+.statistique .box p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0.5rem 0 0;
+}
+
+@media (max-width: 768px) {
+    .statistique .box {
+        width: 100%;
+    }
+}  
 
 
 /*=============Info page===================*/
