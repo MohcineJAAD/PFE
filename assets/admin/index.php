@@ -16,48 +16,236 @@
 
 <body>
     <div class="page d-flex">
-        <div class="sidebar bg-fff p-20 p-relative">
-            <h3 class="p-relative txt-c mt-0">B.T.S</h3>
-            <ul>
-                <li>
-                    <a href="index.php" class="active d-flex align-c fs-14 color-000 rad-6 p-10">
-                        <i class="fa-solid fa-chart-simple fa-fw"></i>
-                        <span class="fs-14 ml-10">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
-                        <i class="fa-solid fa-chalkboard-user fa-fw"></i>
-                        <span class="fs-14 ml-10">Professeur</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
-                        <i class="fa-solid fa-user-graduate fa-fw"></i>
-                        <span class="fs-14 ml-10">Étudient</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
-                        <i class="fa-solid fa-newspaper fa-fw"></i>
-                        <span class="fs-14 ml-10">Publication</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
-                        <i class="fa-solid fa-calendar-xmark fa-fw"></i>
-                        <span class="fs-14 ml-10">Absence</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
-                        <i class="fa-solid fa-user-gear fa-fw"></i>
-                        <span class="fs-14 ml-10">Paramètres</span>
-                    </a>
-                </li>
-            </ul>
+        <?php require 'sidebar.php';?>
+        <div class="content w-full">
+            <?php require 'header.php';?>
+            <h1 class="p-relative">Dashboard</h1>
+            <div class="wrapper d-grid gap-20">
+                <div class="cards rad-10 txt-c-mobile block-mobile">
+                    <div class="card-content">
+                        <h3>Etudient</h3>
+                        <p class="value">700</p>
+                        <i class="fa-solid fa-user-graduate" style="color: #0075ff;"></i>
+                    </div>
+                </div>
+                <div class="cards rad-10 txt-c-mobile block-mobile">
+                    <div class="card-content">
+                        <h3>Professeur</h3>
+                        <p class="value">80</p>
+                        <i class="fa-solid fa-chalkboard-user" style="color: #0075ff;"></i>
+                    </div>
+                </div>
+                <div class="cards rad-10 txt-c-mobile block-mobile">
+                    <div class="card-content">
+                        <h3>Ressources</h3>
+                        <p class="value">284</p>
+                        <i class="fa-solid fa-book-open-reader" style="color: #0075ff;"></i>
+                    </div>
+                </div>
+                <div class="cards rad-10 txt-c-mobile block-mobile">
+                    <div class="card-content">
+                        <h3>Etudient Active</h3>
+                        <p class="value">300/600</p>
+                        <i class="fa-solid fa-user-check" style="color: #0075ff;"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="statistique p-20 bg-fff rad-10 m-20">
+                <p>Répartition des étudiants par sexe</p>
+                <div class="graphBox">
+                    <canvas id="chart"></canvas>
+                </div>
+            </div>
+            <div class="statistique p-20 bg-fff rad-10 m-20">
+                <p>Répartition des professeur par sexe</p>
+                <div class="graphBox">
+                    <canvas id="chart1"></canvas>
+                </div>
+            </div>
+            <div class="statistique p-20 bg-fff rad-10 m-20">
+                <p>Répartition des Ressources par type</p>
+                <div class="graphBox">
+                    <canvas id="chart2"></canvas>
+                </div>
+            </div>
+
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const avatar = document.getElementById("avatar");
+            const dropMenu = document.getElementById("dropMenu");
+
+            avatar.addEventListener("click", function(event) {
+                event.stopPropagation();
+                dropMenu.classList.toggle("drop-menu-Active");
+            });
+
+            document.addEventListener("click", function(event) {
+                if (!dropMenu.contains(event.target) && !avatar.contains(event.target))
+                    dropMenu.classList.remove("drop-menu-Active");
+            });
+        });
+    </script>
+    <script>
+        const ctx = document.getElementById('chart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['PME', 'DSI'],
+                datasets: [{
+                        label: 'Mâles',
+                        data: [150, 180],
+                        backgroundColor: '#0075ff',
+                        borderColor: '#0056b3',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Femelles',
+                        data: [200, 220],
+                        backgroundColor: '#ff0075',
+                        borderColor: '#b30056',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        },
+                        barPercentage: 0.9,
+                        categoryPercentage: 0.5
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 50
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' Etudient';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        const ctx1 = document.getElementById('chart1').getContext('2d');
+        const chart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['PME', 'DSI'],
+                datasets: [{
+                        label: 'Mâles',
+                        data: [150, 180],
+                        backgroundColor: '#0075ff',
+                        borderColor: '#0056b3',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Femelles',
+                        data: [200, 220],
+                        backgroundColor: '#ff0075',
+                        borderColor: '#b30056',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        },
+                        barPercentage: 0.9,
+                        categoryPercentage: 0.5
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 50
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' Professeur';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('chart2').getContext('2d');
+            var myBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['TD', 'DS', 'National', 'Cour', 'Passage'],
+                    datasets: [{
+                        label: ['Resource'],
+                        data: [12, 19, 3, 5, 2],
+                        backgroundColor: [
+                            '#0075ff'
+                        ],
+                        borderColor: [
+                            '#0075ff'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                display: true
+                            },
+                            barPercentage: 0.9,
+                            categoryPercentage: 0.5
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

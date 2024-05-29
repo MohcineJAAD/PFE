@@ -1,3 +1,13 @@
+:root {
+    --color-60: #0075ff;
+    --color-60-Tr: #0077ff80;
+    --color-30: #fff;
+    --color-10: #333333;
+    --color-10-transparent: #3333331a;
+    --color-second: #d6d6d6;
+    --color-aaa: #aaa;
+    --color-333: #333
+}
 /* Box */
 .d-flex {
     display: flex;
@@ -5,23 +15,46 @@
 .align-c {
     align-items: center;
 }
+.d-grid {
+    display: grid;
+}
+.gap-20 {
+    gap: 20px;
+}
+@media (max-width: 767px) {
+    .block-mobile {
+        display: block;
+    }
+}
 /* End box */
 
 /* Padding + margin */
 .p-10 {
     padding: 10px;
 }
+.p-15 {
+    padding: 15px;
+}
 .p-20 {
     padding: 20px;
 }
+.m-0 {
+    margin: 0;
+}
+.m-20 {
+    margin: 20px;
+}
 .mt-20 {
-    margin-top: 20;
+    margin-top: 20px;
 }
 .mt-0 {
     margin-top: 0;
 }
 .ml-10 {
     margin-left: 10px;
+}
+.mb-5 {
+    margin-bottom: 5px;
 }
 /* End padding + margin */
 
@@ -44,9 +77,13 @@
 .txt-c {
     text-align: center;
 }
-
 .fs-14 {
     font-size: 14px;
+}
+@media (max-width: 767px) {
+    .txt-c-mobile {
+        text-align: center;
+    }
 }
 /* End font */
 
@@ -58,4 +95,25 @@
     -ms-border-radius: 6px;
     -o-border-radius: 6px;
 }
+.rad-10 {
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
 /* End border */
+
+/* Width */
+.w-full {
+    width: 100%;
+}
+/* End width */
+
+/* Components */
+.between-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+/* End components */

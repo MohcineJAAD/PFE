@@ -1,18 +1,18 @@
+:root {
+    --color-60: #0075ff;
+    --color-60-Tr: #0077ff80;
+    --color-30: #fff;
+    --color-10: #333;
+    --color-10-transparent: #3333331a;
+    --color-second: #d6d6d6;
+    --color-aaa: #aaa;
+    --color-333: #333
+}
 * {
     box-sizing: border-box;
 }
 *:focus {
     outline: none;
-}
-:root {
-    --color-60: #0075ff;
-    --color-60-Tr: #0077ff80;
-    --color-30: #fff;
-    --color-10: #333333;
-    --color-10-transparent: #3333331a;
-    --color-second: #d6d6d6;
-    --color-aaa: #aaa;
-    --color-333: #333
 }
 body {
     margin: 0;
@@ -21,10 +21,24 @@ body {
 a {
     text-decoration: none;
 }
+::-webkit-scrollbar {
+    width: 15px;
+}
+::-webkit-scrollbar-track {
+    background-color: var(--color-30);
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-60);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: #0e65c9;
+}
 .page {
     background-image: linear-gradient(180deg, var(--color-30) 0%, var(--color-second) 100%);
     min-height: 100vh;
+    width: 100%;
 }
+/* Sidebare */
 ul {
     list-style: none;
     padding: 0;
@@ -62,4 +76,159 @@ ul {
     .sidebar ul li a span {
         display: none;
     }
+}
+/* End sidebare */
+
+/* Contant */
+.page .head {
+    position: relative;
+}
+.page .head .welcomUser {
+    font-weight: 600;
+    color: var(--color-10);
+}
+.page .head img {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -ms-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.page .head img:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+}
+.userHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userHeader span {
+    margin-left: 0; 
+}
+.drop-menu {
+    display: none;
+}
+.drop-menu img{
+    width: 80px !important;
+    height: 80px !important;
+}
+.drop-menu li a {
+    text-decoration: none;
+    color: var(--color-10);
+}
+.drop-menu li:last-child {
+    display: flex;
+    justify-content: center;
+}
+.drop-menu li a:hover,
+.drop-menu li a.active {
+    background-color: var(--color-60);
+    color: var(--color-30);
+}
+.drop-menu-Active {
+    position: absolute;
+    top: 100%;
+    right: 16px;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px var(--color-10-transparent);
+    overflow: hidden;
+    display: block;
+    background-color: var(--color-30);
+    z-index: 1;
+}
+.page h1 {
+    margin: 20px 20px 40px;
+    color: var(--color-60);
+}
+.page h1::before,
+.page h1::after {
+    content: "";
+    height: 3px;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.page h1::before {
+    background-color: var(--color-30);
+    width: 120px;
+}
+.page h1::after {
+    background-color: var(--color-60);
+    width: 50px;
+}
+.wrapper {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    margin: 0 20px;
+}
+@media (max-width: 767px) {
+    .wrapper {
+    grid-template-columns: minmax(200px, 1fr);
+    margin: 0 10px;
+    gap: 10px;
+}
+}
+.cards {
+    background-color: var(--color-30);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 0.5rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+.cards:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+.value {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #555;
+}
+.card-content i {
+    font-size: 32px;
+}
+.statistique {
+    flex: 1;
+    overflow-y: auto;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+.graphBox {
+    /* position: relative; */
+    /* box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); */
+    height: 30rem;
+}
+.statistique p {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--color-10);
 }
