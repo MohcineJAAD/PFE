@@ -12,7 +12,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             <ul>
                 <li><a href="index.php" class="<?php echo $current_page == 'index.php' ? 'active' : 'enable'; ?>">ACCEUIL</a></li>
                 <li><a href="formation.php" class="<?php echo $current_page == 'formation.php' ? 'enable active' : 'enable'; ?>">FORMATION</a></li>
-                <li><a href="#" class="enable">RESOURCES</a></li>
+                <li><a href="resources.php" class="<?php echo $current_page == 'resources.php' ? 'enable active' : 'enable'; ?>">RESOURCES</a></li>
                 <li><a href="#" class="enable">CONTACT</a></li>
             </ul>
         </nav>
