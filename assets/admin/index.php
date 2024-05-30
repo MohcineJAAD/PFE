@@ -73,22 +73,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const avatar = document.getElementById("avatar");
-            const dropMenu = document.getElementById("dropMenu");
-
-            avatar.addEventListener("click", function(event) {
-                event.stopPropagation();
-                dropMenu.classList.toggle("drop-menu-Active");
-            });
-
-            document.addEventListener("click", function(event) {
-                if (!dropMenu.contains(event.target) && !avatar.contains(event.target))
-                    dropMenu.classList.remove("drop-menu-Active");
-            });
-        });
-    </script>
+    
     <script>
         const ctx = document.getElementById('chart').getContext('2d');
         const chart = new Chart(ctx, {

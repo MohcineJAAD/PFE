@@ -28,3 +28,19 @@
         </ul>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const avatar = document.getElementById("avatar");
+        const dropMenu = document.getElementById("dropMenu");
+
+        avatar.addEventListener("click", function(event) {
+            event.stopPropagation();
+            dropMenu.classList.toggle("drop-menu-Active");
+        });
+
+        document.addEventListener("click", function(event) {
+            if (!dropMenu.contains(event.target) && !avatar.contains(event.target))
+                dropMenu.classList.remove("drop-menu-Active");
+        });
+    });
+</script>

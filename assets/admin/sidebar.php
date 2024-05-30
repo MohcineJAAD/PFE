@@ -11,25 +11,25 @@
             </a>
         </li>
         <li>
-            <a href="index.php" class="<?php echo $current_page == 'opProfesseur.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
+            <a href="opProfesseur.php" class="<?php echo $current_page == 'opProfesseur.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
                 <i class="fa-solid fa-chalkboard-user fa-fw"></i>
                 <span class="fs-14 ml-10">Professeur</span>
             </a>
         </li>
         <li>
-            <a href="index.php" class="<?php echo $current_page == 'opEtudient.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
+            <a href="opEtudient.php" class="<?php echo $current_page == 'opEtudient.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
                 <i class="fa-solid fa-user-graduate fa-fw"></i>
                 <span class="fs-14 ml-10">Étudient</span>
             </a>
         </li>
         <li>
-            <a href="index.php" class="<?php echo $current_page == 'pub.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
+            <a href="pub.php" class="<?php echo $current_page == 'pub.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
                 <i class="fa-solid fa-newspaper fa-fw"></i>
                 <span class="fs-14 ml-10">Publication</span>
             </a>
         </li>
         <li>
-            <a href="index.php" class="<?php echo $current_page == 'absence.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
+            <a href="absence.php" class="<?php echo $current_page == 'absence.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
                 <i class="fa-solid fa-calendar-xmark fa-fw"></i>
                 <span class="fs-14 ml-10">Absence</span>
             </a>

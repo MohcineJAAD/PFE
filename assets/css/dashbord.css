@@ -222,8 +222,6 @@ h3 {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 .graphBox {
-    /* position: relative; */
-    /* box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); */
     height: 30rem;
 }
 .statistique p {
@@ -231,4 +229,69 @@ h3 {
     text-align: center;
     margin-bottom: 20px;
     color: var(--color-10);
+}
+/* End Contant */
+/* personne Contant */
+.personne-page {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+@media (max-width: 767px) {
+    .personne-page {
+        grid-template-columns: minmax(200px, 1fr);
+        margin-left: 10px;
+        margin-right: 10px;
+        gap: 10px;
+    }
+}
+.personne-page .personne {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.personne-page .personne .info {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    margin: 10px 0 15px 0;
+    padding: 15px 0;
+}
+.personne-page .personne .info i {
+    margin-right: 5px;
+}
+.btn-shape {
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+.personne-page .personne:last-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.add-card .circle-dashed {
+    width: 100px;
+    height: 100px;
+    border: 2px dashed var(--color-60);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    color: var(--color-60);
+}
+.personne {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+.branch-filter button {
+    margin-right: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.branch-filter button:hover {
+    background-color: #0056b3;
 }
