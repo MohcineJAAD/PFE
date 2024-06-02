@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="assets/css/ma.css">
         <link rel="stylesheet" href="assets/css/footer.css">
         
-        <link rel="shortcut icon" href="./static/img/codecell_logo.svg" type="image/x-icon" sizes="any">
+       
         <link rel="stylesheet" href="assets/css/master1.css" />
         <link rel="stylesheet" href="assets/css/all.min.css" />
         
