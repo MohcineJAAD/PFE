@@ -594,3 +594,14 @@ label {
         color: #eee;
     }
 }
+.toggle-password {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.password-container {
+    position: relative;
+}
+/* End profile */
