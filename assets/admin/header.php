@@ -8,13 +8,13 @@
         </div>
         <ul>
             <li>
-                <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
+                <a href="profile.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
                     <i class="fa-solid fa-user fa-fw"></i>
                     <span class="fs-14 ml-10">Profil</span>
                 </a>
             </li>
             <li>
-                <a href="index.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
+                <a href="alterPass.php" class="d-flex align-c fs-14 color-000 rad-6 p-10">
                     <i class="fa-solid fa-key fa-fw"></i>
                     <span class="fs-14 ml-10">Changer le mot de passe</span>
                 </a>
