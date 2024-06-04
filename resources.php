@@ -21,25 +21,38 @@
 
 <section class="landing">
 <div class="cards">
-    <div class="card">
+
+    <div ><a href="courses.php" class="card">
+    
         <div class="icon"><i class="fas fa-book"></i></div>
-        <div class="text">cours &rarr;</div>
+        <div class="text">cours &rarr;</div></a>
     </div>
-    <div class="card">
+    
+    <div><a href="tds.php" class="card">
+    
         <div class="icon"><i class="fas fa-pencil-ruler"></i></div>
-        <div class="text">td &rarr;</div>
+        <div class="text">td &rarr;</div></a>
     </div>
-    <div class="card">
+
+   
+    <div> <a href="dss.php" class="card">
+
         <div class="icon"><i class="fas fa-clipboard-check"></i></div>
-        <div class="text">ds &rarr;</div>
+        <div class="text">ds &rarr;</div></a>
     </div>
-    <div class="card">
+
+    
+    <div><a href="passages.php" class="card">
+    
         <div class="icon"><i class="fas fa-file-alt"></i></div>
-        <div class="text">passage &rarr;</div>
+        <div class="text">passage &rarr;</div></a>
     </div>
-    <div class="card">
+
+    
+    <div><a href="nationals.php" class="card">
+    
         <div class="icon"><i class="fas fa-graduation-cap"></i></div>
-        <div class="text">nationals &rarr;</div>
+        <div class="text">nationals &rarr;</div></a>
     </div>
 </div>
 </section>
