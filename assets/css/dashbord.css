@@ -2,11 +2,13 @@
     --color-60: #0075ff;
     --color-60-Tr: #0077ff80;
     --color-30: #fff;
-    --color-10: #333;
+    --color-10: #333333;
     --color-10-transparent: #3333331a;
     --color-second: #d6d6d6;
     --color-aaa: #aaa;
-    --color-333: #333
+    --color-333: #333;
+    --c-fff: #fff;
+    --c-f00: #f00;
 }
 * {
     box-sizing: border-box;
@@ -75,13 +77,11 @@ ul {
         font-size: 13px;
         margin-bottom: 15px;
     }
-
     .sidebar ul li a span {
         display: none;
     }
 }
 /* End sidebare */
-
 /* Contant */
 .page .head {
     position: relative;
@@ -100,6 +100,10 @@ ul {
     -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
     -ms-transition: transform 0.3s ease, box-shadow 0.3s ease;
     -o-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
 }
 .page .head img:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -148,6 +152,10 @@ ul {
     display: block;
     background-color: var(--color-30);
     z-index: 1;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 .page h1 {
     margin: 20px 20px 40px;
@@ -196,6 +204,14 @@ ul {
     justify-content: center;
     transition: transform 0.3s, box-shadow 0.3s;
     cursor: pointer;
+    -webkit-transition: transform 0.3s, box-shadow 0.3s;
+    -moz-transition: transform 0.3s, box-shadow 0.3s;
+    -ms-transition: transform 0.3s, box-shadow 0.3s;
+    -o-transition: transform 0.3s, box-shadow 0.3s;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
 }
 .cards:hover {
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
@@ -234,7 +250,6 @@ ul {
     color: var(--color-10);
 }
 /* End Contant */
-
 /* personne Contant */
 .personne-page {
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -282,7 +297,6 @@ ul {
 .personne {
     display: block;
 }
-
 .hidden {
     display: none;
 }
@@ -295,38 +309,38 @@ ul {
     color: #fff;
     cursor: pointer;
 }
-
 .branch-filter button:hover {
     background-color: #0056b3;
 }
-
 /* End personne Contant */
-
 /* Absence */
 .Inventory-by-date label {
     margin-right: 10px;
 }
-
 .Inventory-by-date input[type="date"] {
     margin-bottom: 20px;
     padding: 10px;
     font-size: 15px;
     border: none;
 }
-
-.absences .responsive-table {
+.absences .responsive-table,
+.horaire .responsive-table {
     overflow-x: auto;
 }
-.absences table {
+.absences table,
+.horaire table {
     min-width: 1000px;
     border-spacing: 0;
 }
-.absences thead th {
+.absences thead th,
+.horaire th {
     background-color: var(--color-60);
     color: var(--color-30);
 }
 .absences table th,
-.absences table td {
+.absences table td,
+.horaire table th,
+.horaire table td {
     padding: 15px;
     text-align: center;
 }
@@ -345,7 +359,8 @@ ul {
 .absences table .label:hover {
     transform: scale(1.1);
 }
-.absences tbody td {
+.absences tbody td,
+.horaire tbody td {
     border-bottom: 1px solid #eee;
     border-left: 1px solid #eee;
     transition: .3s;
@@ -354,8 +369,11 @@ ul {
     -ms-transition: .3s;
     -o-transition: .3s;
 }
-.absences tbody td:last-child {
+.absences tbody td:last-child,
+.horaire tbody td:last-child {
     border-right: 1px solid #eee;
+}
+.absences tbody td:last-child {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -366,7 +384,8 @@ ul {
 .absences tbody td:last-child span:first-child {
     margin-bottom: 5px;
 }
-.absences tbody tr:hover td {
+.absences tbody tr:hover td,
+.horaire tbody tr:hover td {
     background-color: #faf7f7;
 }
 /* End Absence */
@@ -575,7 +594,6 @@ label {
         align-items: center;
         text-align: center;
     }
-
     .profile-details th,
     .profile-details td {
         display: block;
@@ -584,12 +602,10 @@ label {
         border-bottom: none;
         padding: 15px;
     }
-
     .profile-details th {
         background-color: transparent;
         color: #aaa;
     }
-
     .profile-details td {
         color: #eee;
     }
@@ -605,3 +621,63 @@ label {
     position: relative;
 }
 /* End profile */
+/* Horaire */
+.horaire select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--c-fff);
+    font-size: 14px;
+    color: var(--color-10);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
+}
+.horaire select.editable {
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+}
+.horaire select:focus {
+    border-color: var(--color-60);
+    outline: none;
+}
+.horaire select option {
+    padding: 10px;
+}
+.horaire .action-buttons {
+    margin-top: 10px;
+}
+.horaire .action-buttons button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+}
+.edit-btn,
+.delete-btn,
+.save-btn {
+    color: var(--color-30);
+}
+.edit-btn {
+    background-color: #4CAF50;
+}
+.delete-btn {
+    background-color: var(--c-f00);
+}
+.save-btn {
+    background-color: var(--color-60);
+    display: none;
+}
+.save-btn:hover {
+    background-color: #0056b3;
+}
+.action-buttons button i {
+    margin-right: 5px;
+}
+/* End horaire */

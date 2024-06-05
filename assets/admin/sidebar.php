@@ -34,5 +34,11 @@
                 <span class="fs-14 ml-10">Absence</span>
             </a>
         </li>
+        <li>
+            <a href="horaire.php" class="<?php echo $current_page == 'horaire.php' ? 'active' : ''; ?> d-flex align-c fs-14 color-000 rad-6 p-10">
+                <i class="fa-solid fa-calendar-days fa-fw"></i>
+                <span class="fs-14 ml-10">Horaire</span>
+            </a>
+        </li>
     </ul>
 </div>
