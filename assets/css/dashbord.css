@@ -515,13 +515,14 @@ label {
     border-bottom: 1px solid var(--color-30);
 }
 .profile-details th {
+    width: 200px;
     text-align: left;
     color: var(--color-30);
     font-weight: normal;
     background-color: var(--color-60);
 }
 .profile-details td {
-    color: #b93535;
+    color: var(--color-333);
 }
 .profile-details tr:last-child th,
 .profile-details tr:last-child td {
@@ -634,6 +635,10 @@ label {
     -moz-appearance: none;
     appearance: none;
     background-image: none;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
 }
 .horaire select.editable {
     background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg>');
@@ -651,10 +656,7 @@ label {
     margin-top: 10px;
 }
 .horaire .action-buttons button {
-    margin-right: 10px;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;

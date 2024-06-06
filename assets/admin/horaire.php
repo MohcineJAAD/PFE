@@ -63,9 +63,9 @@ $prof = ["Pr.EL FAJJAJ", "Pr.SALIHI", "Pr.OMAYMA CHEBBA", "Pr.DAHAR", "Pr.NAAIM"
                         </tbody>
                     </table>
                     <div class="action-buttons">
-                        <button type="button" class="edit-btn"><i class="fas fa-edit"></i>Modifier</button>
-                        <button type="button" class="save-btn"><i class="fas fa-save"></i>sauvegarder</button>
-                        <button type="button" class="delete-btn"><i class="fas fa-trash"></i>Supprimer</button>
+                        <button type="button" class="edit-btn btn-shape mb-10"><i class="fas fa-edit"></i>Modifier</button>
+                        <button type="button" class="save-btn btn-shape mb-10"><i class="fas fa-save"></i>sauvegarder</button>
+                        <button type="button" class="delete-btn btn-shape mb-10"><i class="fas fa-trash"></i>Supprimer</button>
                     </div>
                 </form>
             </div>

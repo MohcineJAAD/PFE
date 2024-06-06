@@ -52,7 +52,7 @@
                         </div>
                     </div>
                     <div class="action evenly-flex fs-13">
-                        <a href="profile-prof" class="color-fff bg-c-60 btn-shape">Profile</a>
+                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
                         <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div class="action evenly-flex fs-13">
-                        <a href="profile-prof" class="color-fff bg-c-60 btn-shape">Profile</a>
+                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
                         <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="action evenly-flex fs-13">
-                        <a href="profile-prof" class="color-fff bg-c-60 btn-shape">Profile</a>
+                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
                         <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
                     </div>
                 </div>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
                     <div class="action evenly-flex fs-13">
-                        <a href="profile-prof" class="color-fff bg-c-60 btn-shape">Profile</a>
+                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
                         <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
                     </div>
                 </div>
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                     <div class="action evenly-flex fs-13">
-                        <a href="profile-prof.php" class="color-fff bg-c-60 btn-shape">Profile</a>
+                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
                         <a href="delete-prof.php" class="color-fff bg-f00 btn-shape">Retirer</a>
                     </div>
                 </div>
