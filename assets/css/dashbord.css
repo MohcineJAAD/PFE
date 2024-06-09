@@ -278,7 +278,7 @@ ul {
     padding: 4px 10px;
     border-radius: 6px;
 }
-.personne-page .personne:last-child {
+.personne-page .personne .add-card {
     display: flex;
     align-items: center;
     justify-content: center;

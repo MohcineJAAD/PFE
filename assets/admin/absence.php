@@ -39,6 +39,7 @@
                     <table class="fs-15 w-full" id="absence-list">
                         <thead>
                             <tr>
+                                <th>N</th>
                                 <th>CNE</th>
                                 <th>Nom complet</th>
                                 <th>Classe</th>
@@ -50,6 +51,7 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td>1</td>
                                 <td>A13000001</td>
                                 <td>Alice Dupont</td>
                                 <td>DSI1</td>
@@ -64,6 +66,7 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>2</td>
                                 <td>A13000002</td>
                                 <td>Bob Martin</td>
                                 <td>DSI2</td>
@@ -78,6 +81,7 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>3</td>
                                 <td>A13000003</td>
                                 <td>Charlie Brown</td>
                                 <td>PME1</td>
