@@ -127,6 +127,9 @@
 .fs-15 {
     font-size: 15px;
 }
+.fs-24 {
+    font-size: 24px;
+}
 @media (max-width: 767px) {
     .txt-c-mobile {
         text-align: center;

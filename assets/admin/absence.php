@@ -12,6 +12,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Work+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <title>Professeur</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var dateInput = document.querySelector('input[type="date"]');
+            var today = new Date();
+            var day = today.getDate().toString().padStart(2, '0');
+            var month = (today.getMonth() + 1).toString().padStart(2, '0'); // January is 0!
+            var year = today.getFullYear();
+            var todayString = year + '-' + month + '-' + day;
+            dateInput.value = todayString;
+        });
+    </script>
 </head>
 
 <body>
@@ -26,7 +37,7 @@
                     <div class="options w-full">
                         <div class="Inventory-by-date">
                             <label for="day">Jour:</label>
-                            <input type="date" name="" id="">
+                            <input type="date" name="date" id="day">
                         </div>
                         <div class="branch-filter mt-10 mb-10">
                             <button class="btn-shape bg-c-60 color-fff" data-branch="all">Tous</button>
