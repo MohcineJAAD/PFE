@@ -56,142 +56,66 @@
                         <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
                     </div>
                 </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="PME2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>PME2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                        <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="DSI2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>DSI2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                        <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="PME2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>PME2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                        <a href="profile-prof" class="color-fff bg-f00 btn-shape">Retirer</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="DSI1">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>DSI1</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                        <a href="delete-prof.php" class="color-fff bg-f00 btn-shape">Retirer</a>
-                    </div>
-                </div>
                 <div class="personne bg-fff rad-6 p-20 p-relative">
-                    <a href="add-prof.php">
-                        <div class="add-card rad-6 p-20 p-relative txt-c">
-                            <div class="add-content">
-                                <div class="circle-dashed">
-                                    <i class="fa-solid fa-plus"></i>
-                                </div>
-                                <p class="mt-10 color-fff color-333">Ajouter</p>
+                    <div class="add-card rad-6 p-20 p-relative txt-c" id="add-button">
+                        <div class="add-content">
+                            <div class="circle-dashed">
+                                <i class="fa-solid fa-plus"></i>
                             </div>
+                            <p class="mt-10 color-333">Ajouter</p>
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ajouter un étudiant</h2>
+            <form id="addStudentForm" action="create_account.php" method="POST">
+                <div class="form-personne">
+                    <label for="name" class="mb-10">Nom complet:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-personne">
+                    <label for="cne" class="mb-10">CNE:</label>
+                    <input type="text" id="cne" name="cne" required>
+                </div>
+                <div class="form-personne">
+                    <label for="password" class="mb-10">Mot de passe:</label>
+                    <input type="text" id="password" name="password" readonly>
+                </div>
+                <div class="form-personne">
+                    <label for="branch" class="mb-10">Branche:</label>
+                    <select id="branch" name="branch" required>
+                        <option value="DSI1">DSI1</option>
+                        <option value="DSI2">DSI2</option>
+                        <option value="PME1">PME1</option>
+                        <option value="PME2">PME2</option>
+                    </select>
+                </div>
+                <div class="action">
+                    <button type="submit" class="btn-shape bg-c-60 color-fff" id="add-student">Ajouter</button>
+                    <button type="button" class="btn-shape bg-f00 color-fff" id="cancel">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const branchButtons = document.querySelectorAll('.branch-filter button');
+            const students = document.querySelectorAll('.personne');
+            const modal = document.getElementById("myModal");
+            const addButton = document.getElementById("add-button");
+            const closeModal = document.querySelector(".close");
+            const cancelModal = document.getElementById("cancel");
 
             branchButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const selectedBranch = this.getAttribute('data-branch');
-
-                    const students = document.querySelectorAll('.personne');
                     students.forEach(student => {
                         const studentBranch = student.getAttribute('data-branch');
                         if (selectedBranch === 'all' || selectedBranch === studentBranch) {
@@ -202,6 +126,40 @@
                     });
                 });
             });
+
+            addButton.addEventListener('click', function() {
+                modal.style.display = "flex";
+                document.getElementById('password').value = generateRandomPassword(8);
+            });
+
+            closeModal.addEventListener('click', function() {
+                modal.style.display = "none";
+            });
+
+            cancelModal.addEventListener('click', function() {
+                modal.style.display = "none";
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            });
+            function generateRandomPassword() {
+                const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+                const numbers = '0123456789';
+
+                const firstChar = upperCase.charAt(Math.floor(Math.random() * upperCase.length));
+                const nextThreeChars = Array.from({
+                    length: 3
+                }, () => lowerCase.charAt(Math.floor(Math.random() * lowerCase.length))).join('');
+                const lastFourChars = Array.from({
+                    length: 4
+                }, () => numbers.charAt(Math.floor(Math.random() * numbers.length))).join('');
+
+                return firstChar + nextThreeChars + lastFourChars;
+            }
         });
     </script>
 </body>
