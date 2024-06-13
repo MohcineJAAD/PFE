@@ -16,36 +16,92 @@
 
 <body>
     <div class="page d-flex">
-        <?php require 'sidebar.php';?>
+        <?php require 'sidebar.php'; ?>
         <div class="content w-full">
-            <?php require 'header.php';?>
+            <?php require 'header.php'; ?>
+            <?php
+            $active_period = 7;
+
+            // Fetch number of male and female students
+            $students_result_m_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Male' AND sector = 'DSI' ");
+            $students_result_m_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Male' AND sector = 'PME' ");
+            $students_row_m_D = $students_result_m_D->fetch_assoc();
+            $students_row_m_P = $students_result_m_P->fetch_assoc();
+            $students_count_m_D = $students_row_m_D['count'];
+            $students_count_m_P = $students_row_m_P['count'];
+
+            $students_result_f_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Female' AND sector = 'DSI'");
+            $students_result_f_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Female' AND sector = 'PME'");
+            $students_row_f_D = $students_result_f_D->fetch_assoc();
+            $students_row_f_P = $students_result_f_P->fetch_assoc();
+            $students_count_f_D = $students_row_f_D['count'];
+            $students_count_f_P = $students_row_f_P['count'];
+            $total_students = $students_count_m_P + $students_count_m_D + $students_count_f_P + $students_count_f_D;
+
+            // Fetch number of male and female professors
+            $professors_result_m_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Male' AND sector = 'DSI' ");
+            $professors_result_m_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Male' AND sector = 'PME' ");
+            $professors_row_m_D = $professors_result_m_D->fetch_assoc();
+            $professors_row_m_P = $professors_result_m_P->fetch_assoc();
+            $professors_count_m_D = $professors_row_m_D['count'];
+            $professors_count_m_P = $professors_row_m_P['count'];
+
+            $professors_result_f_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Female' AND sector = 'DSI'");
+            $professors_result_f_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Female' AND sector = 'PME'");
+            $professors_row_f_D = $professors_result_f_D->fetch_assoc();
+            $professors_row_f_P = $professors_result_f_P->fetch_assoc();
+            $professors_count_f_D = $professors_row_f_D['count'];
+            $professors_count_f_P = $professors_row_f_P['count'];
+            $total_professors = $professors_count_m_P + $professors_count_m_D + $professors_count_f_P + $professors_count_f_D;
+
+            // Fetch number of resources
+            $resources_result = $conn->query("SELECT type, COUNT(*) AS count FROM ressources GROUP BY type");
+            $resource_counts = array();
+            $total_count = 0;
+            // Arrays to hold resource types and their counts for chart
+            $resource_types = array();
+            $resource_values = array();
+
+            // Fetch and store each row in the array
+            while ($resources_row = $resources_result->fetch_assoc()) {
+                $resource_counts[$resources_row["type"]] = $resources_row["count"];
+                $total_count += $resources_row["count"];
+                $resource_types[] = $resources_row["type"];
+                $resource_values[] = $resources_row["count"];
+            }
+
+            // Fetch number of active students
+            $active_students_result = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs WHERE role = 'Etudiant' AND last_login >= NOW() - INTERVAL $active_period DAY");
+            $active_students_row = $active_students_result->fetch_assoc();
+            $active_students_count = $active_students_row['count'];
+            ?>
             <h1 class="p-relative">Dashboard</h1>
             <div class="wrapper d-grid gap-20">
                 <div class="cards rad-10 txt-c-mobile block-mobile">
                     <div class="card-content">
                         <h3>Etudient</h3>
-                        <p class="value">700</p>
+                        <p class="value"><?php echo $total_students; ?></p>
                         <i class="fa-solid fa-user-graduate" style="color: #0075ff;"></i>
                     </div>
                 </div>
                 <div class="cards rad-10 txt-c-mobile block-mobile">
                     <div class="card-content">
                         <h3>Professeur</h3>
-                        <p class="value">80</p>
+                        <p class="value"><?php echo $total_professors; ?></p>
                         <i class="fa-solid fa-chalkboard-user" style="color: #0075ff;"></i>
                     </div>
                 </div>
                 <div class="cards rad-10 txt-c-mobile block-mobile">
                     <div class="card-content">
                         <h3>Ressources</h3>
-                        <p class="value">284</p>
+                        <p class="value"><?php echo $total_count; ?></p>
                         <i class="fa-solid fa-book-open-reader" style="color: #0075ff;"></i>
                     </div>
                 </div>
                 <div class="cards rad-10 txt-c-mobile block-mobile">
                     <div class="card-content">
                         <h3>Etudient Active</h3>
-                        <p class="value">300/600</p>
+                        <p class="value"><?php echo $active_students_count . '/' . $total_students; ?></p>
                         <i class="fa-solid fa-user-check" style="color: #0075ff;"></i>
                     </div>
                 </div>
@@ -82,14 +138,14 @@
                 labels: ['PME', 'DSI'],
                 datasets: [{
                         label: 'Mâles',
-                        data: [150, 180],
+                        data: [<?php echo $students_count_m_P; ?>, <?php echo $students_count_m_D; ?>],
                         backgroundColor: '#0075ff',
                         borderColor: '#0056b3',
                         borderWidth: 1
                     },
                     {
                         label: 'Femelles',
-                        data: [200, 220],
+                        data: [<?php echo $students_count_f_P; ?>, <?php echo $students_count_f_D; ?>],
                         backgroundColor: '#ff0075',
                         borderColor: '#b30056',
                         borderWidth: 1
@@ -111,7 +167,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 50
+                            stepSize: 1
                         }
                     }
                 },
@@ -139,14 +195,14 @@
                 labels: ['PME', 'DSI'],
                 datasets: [{
                         label: 'Mâles',
-                        data: [150, 180],
+                        data: [<?php echo $professors_count_m_P; ?>, <?php echo $professors_count_m_D; ?>],
                         backgroundColor: '#0075ff',
                         borderColor: '#0056b3',
                         borderWidth: 1
                     },
                     {
                         label: 'Femelles',
-                        data: [200, 220],
+                        data: [<?php echo $professors_count_f_P; ?>, <?php echo $professors_count_f_D; ?>],
                         backgroundColor: '#ff0075',
                         borderColor: '#b30056',
                         borderWidth: 1
@@ -168,7 +224,7 @@
                     y: {
                         beginAtZero: true,
                         ticks: {
-                            stepSize: 50
+                            stepSize: 1
                         }
                     }
                 },
@@ -189,48 +245,59 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('chart2').getContext('2d');
-            var myBarChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['TD', 'DS', 'National', 'Cour', 'Passage'],
-                    datasets: [{
-                        label: ['Resource'],
-                        data: [12, 19, 3, 5, 2],
-                        backgroundColor: [
-                            '#0075ff'
-                        ],
-                        borderColor: [
-                            '#0075ff'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            grid: {
-                                display: true
-                            },
-                            barPercentage: 0.9,
-                            categoryPercentage: 0.5
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        const chart2 = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: [<?php foreach ($resource_types as $type) echo "'$type', "; ?>],
+                datasets: [{
+                    label: 'Resource',
+                    data: [<?php foreach ($resource_values as $value) echo "$value, "; ?>],
+                    backgroundColor: '#0075ff',
+                    borderColor: '#0056b3',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
                         },
+                        barPercentage: 0.9,
+                        categoryPercentage: 0.5
                     },
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'top'
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y;
+                            }
                         }
                     }
                 }
-            });
+            }
         });
     </script>
 
 </body>
 
 </html>
+
+<?php
+$conn->close();
+?>
