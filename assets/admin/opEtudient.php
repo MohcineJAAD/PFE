@@ -80,6 +80,10 @@
                     <input type="text" id="name" name="name" required>
                 </div>
                 <div class="form-personne">
+                    <label for="name" class="mb-10">Nom complet:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-personne">
                     <label for="cne" class="mb-10">CNE:</label>
                     <input type="text" id="cne" name="cne" required>
                 </div>

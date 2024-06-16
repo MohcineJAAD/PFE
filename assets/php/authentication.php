@@ -14,8 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Prepare SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT id, role, nom, prenom, mot_de_passe FROM Utilisateurs WHERE identifiant = ? AND mot_de_passe = ?");
-    $stmt->bind_param("ss", $identifiant, $password);
+    $stmt = $conn->prepare("SELECT id, role, nom, prenom, mot_de_passe FROM utilisateurs WHERE identifiant = ?");
+    $stmt->bind_param("s", $identifiant);
     $stmt->execute();
     $stmt->store_result();
 
@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($id, $role, $nom, $prenom, $stored_password);
         $stmt->fetch();
 
-        // Verify password (plain text comparison)
-        if ($password === $stored_password) {
+        // Verify password
+        if (password_verify($password, $stored_password)) {
             unset($_SESSION['error_message']);
 
             // Set session variables
@@ -34,20 +34,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_name'] = htmlspecialchars("$prenom $nom", ENT_QUOTES, 'UTF-8');
 
             // Update last_login timestamp
-            $update_stmt = $conn->prepare("UPDATE Utilisateurs SET last_login = NOW() WHERE id = ?");
+            $update_stmt = $conn->prepare("UPDATE utilisateurs SET last_login = NOW() WHERE id = ?");
             $update_stmt->bind_param("i", $id);
             $update_stmt->execute();
             $update_stmt->close();
 
             // Redirect based on role
             switch ($role) {
-                case 'Admin':
+                case 'admin':
                     header("Location: ../admin");
                     break;
-                case 'Professeur':
+                case 'prof':
                     header("Location: ../Prof");
                     break;
-                case 'Etudiant':
+                case 'etudiant':
                     header("Location: ../Etudient");
                     break;
                 default:

@@ -22,37 +22,46 @@
             <?php
             $active_period = 7;
 
-            // Fetch number of male and female students
-            $students_result_m_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Male' AND sector = 'DSI' ");
-            $students_result_m_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Male' AND sector = 'PME' ");
+            // Fetch number of masculin and femasculin students
+            $students_result_m_D = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u join etudiants e on u.identifiant = e.CNE  WHERE role = 'etudiant' AND sexe = 'masculin' AND section = 'DSI' ");
+            $students_result_m_P = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u join etudiants e on u.identifiant = e.CNE  WHERE role = 'etudiant' AND sexe = 'masculin' AND section = 'PME' ");
             $students_row_m_D = $students_result_m_D->fetch_assoc();
             $students_row_m_P = $students_result_m_P->fetch_assoc();
             $students_count_m_D = $students_row_m_D['count'];
             $students_count_m_P = $students_row_m_P['count'];
 
-            $students_result_f_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Female' AND sector = 'DSI'");
-            $students_result_f_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join etudiants e on u.id = e.utilisateur_id  WHERE role = 'Etudiant' AND sexe = 'Female' AND sector = 'PME'");
+            $students_result_f_D = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u join etudiants e on u.identifiant = e.CNE  WHERE role = 'etudiant' AND sexe = 'feminin' AND section = 'DSI'");
+            $students_result_f_P = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u join etudiants e on u.identifiant = e.CNE  WHERE role = 'etudiant' AND sexe = 'feminin' AND section = 'PME'");
             $students_row_f_D = $students_result_f_D->fetch_assoc();
             $students_row_f_P = $students_result_f_P->fetch_assoc();
             $students_count_f_D = $students_row_f_D['count'];
             $students_count_f_P = $students_row_f_P['count'];
             $total_students = $students_count_m_P + $students_count_m_D + $students_count_f_P + $students_count_f_D;
 
-            // Fetch number of male and female professors
-            $professors_result_m_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Male' AND sector = 'DSI' ");
-            $professors_result_m_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Male' AND sector = 'PME' ");
-            $professors_row_m_D = $professors_result_m_D->fetch_assoc();
-            $professors_row_m_P = $professors_result_m_P->fetch_assoc();
-            $professors_count_m_D = $professors_row_m_D['count'];
-            $professors_count_m_P = $professors_row_m_P['count'];
+            // Fetch number of masculin and femasculin professors
+            // Count male professors in DSI, PME, and DSI_PME sections
+            $professors_result_m_DSI = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u JOIN professeurs p ON u.identifiant = p.matricule WHERE role = 'prof' AND sexe = 'masculin' AND (section = 'DSI' OR section = 'DSI_PME')");
+            $professors_result_m_PME = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u JOIN professeurs p ON u.identifiant = p.matricule WHERE role = 'prof' AND sexe = 'masculin' AND (section = 'PME' OR section = 'DSI_PME')");
+            $professors_row_m_DSI = $professors_result_m_DSI->fetch_assoc();
+            $professors_row_m_PME = $professors_result_m_PME->fetch_assoc();
 
-            $professors_result_f_D = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Female' AND sector = 'DSI'");
-            $professors_result_f_P = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs u join professeurs p on u.id = p.utilisateur_id  WHERE role = 'professeur' AND sexe = 'Female' AND sector = 'PME'");
-            $professors_row_f_D = $professors_result_f_D->fetch_assoc();
-            $professors_row_f_P = $professors_result_f_P->fetch_assoc();
-            $professors_count_f_D = $professors_row_f_D['count'];
-            $professors_count_f_P = $professors_row_f_P['count'];
-            $total_professors = $professors_count_m_P + $professors_count_m_D + $professors_count_f_P + $professors_count_f_D;
+            $professors_count_m_D = $professors_row_m_DSI['count'];
+            $professors_count_m_P = $professors_row_m_PME['count'];
+
+            // Count female professors in DSI, PME, and DSI_PME sections
+            $professors_result_f_DSI = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u JOIN professeurs p ON u.identifiant = p.matricule  WHERE role = 'prof' AND sexe = 'feminin' AND (section = 'DSI' OR section = 'DSI_PME')");
+            $professors_result_f_PME = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs u JOIN professeurs p ON u.identifiant = p.matricule  WHERE role = 'prof' AND sexe = 'feminin' AND (section = 'PME' OR section = 'DSI_PME')");
+
+            $professors_row_f_DSI = $professors_result_f_DSI->fetch_assoc();
+            $professors_row_f_PME = $professors_result_f_PME->fetch_assoc();
+
+            $professors_count_f_D = $professors_row_f_DSI['count'];
+            $professors_count_f_P = $professors_row_f_PME['count'];
+
+            // Total professors
+            $professors_result_total_DSI = $conn->query("SELECT COUNT(*) AS count FROM professeurs");
+            $professors_row_total_DSI = $professors_result_total_DSI->fetch_assoc();
+            $total_professors = $professors_row_total_DSI['count'];
 
             // Fetch number of resources
             $resources_result = $conn->query("SELECT type, COUNT(*) AS count FROM ressources GROUP BY type");
@@ -71,7 +80,7 @@
             }
 
             // Fetch number of active students
-            $active_students_result = $conn->query("SELECT COUNT(*) AS count FROM Utilisateurs WHERE role = 'Etudiant' AND last_login >= NOW() - INTERVAL $active_period DAY");
+            $active_students_result = $conn->query("SELECT COUNT(*) AS count FROM utilisateurs WHERE role = 'etudiant' AND last_login >= NOW() - INTERVAL $active_period DAY");
             $active_students_row = $active_students_result->fetch_assoc();
             $active_students_count = $active_students_row['count'];
             ?>
@@ -129,7 +138,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <script>
         const ctx = document.getElementById('chart').getContext('2d');
         const chart = new Chart(ctx, {

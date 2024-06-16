@@ -329,9 +329,9 @@ ul {
 .form-personne input:focus {
     border-color: var(--color-60);
 }
-.form-personne div input[type="checkbox"] {
-    margin-right: 10px;
-}
+/* .form-personne input[type="checkbox"]:not(:first-of-type) {
+    margin-left: 10px;
+} */
 .modal,
 #info-modal {
     display: none;
@@ -348,6 +348,10 @@ ul {
     align-items: center;
 }
 .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -357,6 +361,10 @@ ul {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
 }
 .close, 
 #info-modal .close-info{
@@ -381,9 +389,9 @@ ul {
     align-items: center;
     margin-bottom: 10px;
 }
-.modal-content .form-personne div input[type="checkbox"] {
+/* .modal-content .form-personne div input[type="checkbox"] {
     margin-right: 10px;
-}
+} */
 .action {
     display: flex;
     justify-content: space-between;
