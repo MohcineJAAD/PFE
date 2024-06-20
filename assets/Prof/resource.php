@@ -24,7 +24,7 @@
                 <div class="pub-form">
                     <div class="post-creation">
                         <h2 class="mt-0 mb-20">Uploader une Nouvelle Ressource</h2>
-                        <form id="postForm" action="" method="POST" enctype="multipart/form-data">
+                        <form id="postForm" action="upload.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="resource-type">Type de Ressource</label>
                                 <select id="resource-type" class="privacy-setting" name="resource-type">
@@ -84,31 +84,50 @@
                             </tr>
                         </thead>
                         <tbody id="resourceTableBody">
-                            <tr data-type="exam">
-                                <td>Examen National</td>
-                                <td>Mathématiques 2024</td>
-                                <td><a href="#">Télécharger</a></td>
-                                <td><a href="#">Télécharger</a></td>
-                                <td>2024-06-03</td>
-                                <td>
-                                    <a href="#" class="supprimer-btn" data-id="1">
-                                        <span class="label btn-shape bg-f00"><i class="fa-solid fa-trash"></i></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr data-type="tp">
-                                <td>TP</td>
-                                <td>Physique 2024</td>
-                                <td><a href="#">Télécharger</a></td>
-                                <td></td>
-                                <td>2024-06-04</td>
-                                <td>
-                                    <a href="#" class="supprimer-btn" data-id="2">
-                                        <span class="label btn-shape bg-f00"><i class="fa-solid fa-trash"></i></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- Add more rows as needed -->
+                            <?php
+                            
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "ebts";
+
+                            
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+
+                            
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
+                            
+                            $sql = "SELECT * FROM ressources";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr data-type='" . $row["type"] . "'>";
+                                    echo "<td>" . $row["type"] . "</td>";
+                                    echo "<td>" . $row["titre"] . "</td>";
+                                    echo "<td><a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a></td>"; // Added 'download' attribute
+                                    echo "<td>";
+                                    if (!empty($row["correction"])) {
+                                        echo "<a href='../uploadsfich/" . $row["correction"] . "' download>Télécharger</a>";
+                                    }
+                                    echo "</td>";
+                                    echo "<td>" . $row["date"] . "</td>";
+                                    echo "<td>
+                                            <a href='#' class='supprimer-btn' data-id='" . $row["id"] . "'>
+                                                <span class='label btn-shape bg-f00'><i class='fa-solid fa-trash'></i></span>
+                                            </a>
+                                          </td>";
+                                    echo "</tr>";
+                                }
+                            } else {
+                                echo "<tr><td colspan='6'>Aucun enregistrement trouvé</td></tr>";
+                            }
+                            $conn->close();
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -152,9 +171,9 @@
 
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // Remove active class from all buttons
+                    
                     filterButtons.forEach(btn => btn.classList.remove('active-filter'));
-                    // Add active class to the clicked button
+                    
                     button.classList.add('active-filter');
 
                     const branch = button.dataset.branch;
@@ -172,6 +191,28 @@
                     }
                 });
             }
+
+            document.querySelectorAll('.supprimer-btn').forEach(item => {
+                item.addEventListener('click', event => {
+                    const resourceId = item.dataset.id;
+                    if (confirm("Êtes-vous sûr de vouloir supprimer cette ressource ?")) {
+                        fetch('delete.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ id: resourceId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Resource deleted:', data);
+                            
+                            item.closest('tr').remove();
+                        })
+                        .catch(error => console.error('Error deleting resource:', error));
+                    }
+                });
+            });
         });
     </script>
 </body>
