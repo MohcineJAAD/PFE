@@ -18,7 +18,7 @@
     <div class="page d-flex">
         <?php require 'sidebar.php'; ?>
         <div class="content w-full">
-            <?php require 'header.php'; ?>
+            <?php require '../admin/header.php'; ?>
             <h1 class="p-relative">Etudients</h1>
             <div class="branch-filter m-20">
                 <button class="btn-shape bg-c-60 color-fff" data-branch="all">Tous</button>
@@ -28,142 +28,48 @@
                 <button class="btn-shape bg-c-60 color-fff" data-branch="PME2">PME2</button>
             </div>
             <div class="personne-page d-grid m-20 gap-20" id="student-list">
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="DSI2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>DSI2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="PME2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>PME2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="DSI2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>DSI2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="PME2">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>PME2</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                    </div>
-                </div>
-                <div class="personne bg-fff rad-6 p-20 p-relative" data-branch="DSI1">
-                    <div class="txt-c">
-                        <img class="rad-half w-100 h-100" src="../imgs/default_avatar.png" alt="Prof Image">
-                        <h4 class="m-0">Mohcine JAAD</h4>
-                    </div>
-                    <div class="info fs-14 p-relative">
-                        <div class="mb-10">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Mohcine JAAD</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-phone"></i>
-                            <span>0645091298</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-at"></i>
-                            <span>mohcine.jaad@gmail.com</span>
-                        </div>
-                        <div class="mb-10">
-                            <i class="fa-solid fa-code-branch"></i>
-                            <span>DSI1</span>
-                        </div>
-                    </div>
-                    <div class="action evenly-flex fs-13">
-                        <a href="profile-etud.php" class="color-fff bg-c-60 btn-shape">Profile</a>
-                    </div>
-                </div>
-                
+                <?php
+                $query = "SELECT u.nom, u.prenom, u.identifiant, u.sexe, u.telephone, u.email, e.niveau FROM utilisateurs u JOIN etudiants e ON u.identifiant = e.CNE WHERE u.role = 'etudiant'";
+                $result = $conn->query($query);
+
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $name = $row['nom'] . " " . $row['prenom'];
+                        $phone = $row['telephone'] ? $row['telephone'] : "N/A";
+                        $email = $row['email'] ? $row['email'] : "N/A";
+                        $branch = $row['niveau'] ? $row['niveau'] : "N/A";
+                        $identifiant = urlencode($row['identifiant']);
+                        echo "<div class='personne bg-fff rad-6 p-20 p-relative' data-branch='{$branch}'>
+                                <div class='txt-c'>
+                                    <img class='rad-half w-100 h-100' src='../imgs/default_avatar.png' alt='Prof Image'>
+                                    <h4 class='m-0'>{$name}</h4>
+                                </div>
+                                <div class='info fs-14 p-relative'>
+                                    <div class='mb-10'>
+                                        <i class='fa-solid fa-user'></i>
+                                        <span>{$name}</span>
+                                    </div>
+                                    <div class='mb-10'>
+                                        <i class='fa-solid fa-phone'></i>
+                                        <span>{$phone}</span>
+                                    </div>
+                                    <div class='mb-10'>
+                                        <i class='fa-solid fa-at'></i>
+                                        <span>{$email}</span>
+                                    </div>
+                                    <div class='mb-10'>
+                                        <i class='fa-solid fa-code-branch'></i>
+                                        <span>{$branch}</span>
+                                    </div>
+                                </div>
+                                <div class='action evenly-flex fs-13'>
+                                    <a href='profile-etud.php?id={$identifiant}' class='color-fff bg-c-60 btn-shape'>Profile</a>
+                                </div>
+                            </div>";
+                    }
+                }
+                $conn->close();
+                ?>
             </div>
         </div>
     </div>

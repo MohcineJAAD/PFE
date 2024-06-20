@@ -549,7 +549,7 @@ label:not(.form-personne label) {
     background-color: #0056b3;
 }
 .display-pub {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
 }
 @media (max-width: 767px) {
     .display-pub {
@@ -561,6 +561,7 @@ label:not(.form-personne label) {
 }
 .display-pub .pub {
     overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 .display-pub .pub .cover {
     max-width: 100%;
@@ -679,6 +680,7 @@ label:not(.form-personne label) {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%;
 }
 .save-button i {
     margin-right: 10px;

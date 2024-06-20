@@ -19,7 +19,7 @@
     <div class="page d-flex">
         <?php require 'sidebar.php'; ?>
         <div class="content w-full">
-            <?php require 'header.php'; ?>
+            <?php require '../admin/header.php'; ?>
             <h1 class="p-relative">Absences</h1>
             <div class="absences p-20 bg-fff rad-10 m-20">
                 <h2 class="mt-0 mb-20">Suivi absence</h2>

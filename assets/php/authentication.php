@@ -24,8 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_result($id, $role, $nom, $prenom, $stored_password);
         $stmt->fetch();
 
-        // Verify password
-        if (password_verify($password, $stored_password)) {
+        // Verify password directly
+        if ($password === $stored_password) {
             unset($_SESSION['error_message']);
 
             // Set session variables

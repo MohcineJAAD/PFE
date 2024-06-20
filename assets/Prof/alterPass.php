@@ -18,7 +18,7 @@
     <div class="page d-flex">
         <?php require 'sidebar.php'; ?>
         <div class="content w-full">
-            <?php require 'header.php'; ?>
+            <?php require '../admin/header.php'; ?>
             <h1 class="p-relative">Changer le mot de passe</h1>
             <div class="profile-container m-20 bg-fff rad-10">
                 <div class="profile-header p-20">
