@@ -1,5 +1,4 @@
 <?php
-// Database connection parameters
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -26,16 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $resourceFileTmp = $resourceFile['tmp_name'];
         $uploadDir = '../uploadsfich/';
 
-        // Ensure the upload directory exists
         if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true); // Create the directory recursively
+            mkdir($uploadDir, 0777, true);
         }
 
-        // Move the uploaded file to the destination directory
-        if (move_uploaded_file($resourceFileTmp, $uploadDir . $resourceFileName)) {
-            // File uploaded successfully
-        } else {
-            // Handle file upload error
+        if (!move_uploaded_file($resourceFileTmp, $uploadDir . $resourceFileName)) {
             echo json_encode(array("error" => "Erreur lors de l'upload du fichier."));
             exit;
         }
@@ -49,16 +43,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $correctionFileTmp = $correctionFile['tmp_name'];
         $uploadDir = '../uploadsfich/';
 
-        // Ensure the upload directory exists
         if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true); // Create the directory recursively
+            mkdir($uploadDir, 0777, true);
         }
 
-        // Move the uploaded file to the destination directory
-        if (move_uploaded_file($correctionFileTmp, $uploadDir . $correctionFileName)) {
-            // File uploaded successfully
-        } else {
-            // Handle file upload error
+        if (!move_uploaded_file($correctionFileTmp, $uploadDir . $correctionFileName)) {
             echo json_encode(array("error" => "Erreur lors de l'upload du fichier de correction."));
             exit;
         }

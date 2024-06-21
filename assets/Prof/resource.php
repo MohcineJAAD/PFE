@@ -24,7 +24,7 @@
                 <div class="pub-form">
                     <div class="post-creation">
                         <h2 class="mt-0 mb-20">Uploader une Nouvelle Ressource</h2>
-                        <form id="postForm" action="upload.php" method="POST" enctype="multipart/form-data">
+                        <form id="postForm" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="resource-type">Type de Ressource</label>
                                 <select id="resource-type" class="privacy-setting" name="resource-type">
@@ -59,7 +59,7 @@
             </div>
             <h2 class="m-20">Tous les posts</h2>
             <div class="absences p-20 bg-fff rad-10 m-20">
-                <h2 class="mt-0 mb-20">Suivi des Ressource</h2>
+                <h2 class="mt-0 mb-20">Suivi des Ressources</h2>
                 <div class="responsive-table">
                     <div class="options w-full">
                         <div class="branch-filter mt-10 mb-10">
@@ -85,31 +85,26 @@
                         </thead>
                         <tbody id="resourceTableBody">
                             <?php
-                            
                             $servername = "localhost";
                             $username = "root";
                             $password = "";
                             $dbname = "ebts";
 
-                            
                             $conn = new mysqli($servername, $username, $password, $dbname);
 
-                            
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error);
                             }
 
-                            
                             $sql = "SELECT * FROM ressources";
                             $result = $conn->query($sql);
 
                             if ($result->num_rows > 0) {
-                                
                                 while ($row = $result->fetch_assoc()) {
                                     echo "<tr data-type='" . $row["type"] . "'>";
                                     echo "<td>" . $row["type"] . "</td>";
                                     echo "<td>" . $row["titre"] . "</td>";
-                                    echo "<td><a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a></td>"; // Added 'download' attribute
+                                    echo "<td><a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a></td>";
                                     echo "<td>";
                                     if (!empty($row["correction"])) {
                                         echo "<a href='../uploadsfich/" . $row["correction"] . "' download>Télécharger</a>";
@@ -145,6 +140,7 @@
             const correctionList = document.getElementById('correctionList');
             const filterButtons = document.querySelectorAll('.filter-btn');
             const resourceTableBody = document.getElementById('resourceTableBody');
+            const postForm = document.getElementById('postForm');
 
             resourceType.addEventListener('change', (event) => {
                 const typesWithCorrection = ['exam', 'examP', 'tp', 'td', 'ds'];
@@ -171,9 +167,7 @@
 
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    
                     filterButtons.forEach(btn => btn.classList.remove('active-filter'));
-                    
                     button.classList.add('active-filter');
 
                     const branch = button.dataset.branch;
@@ -192,6 +186,29 @@
                 });
             }
 
+            postForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const formData = new FormData(postForm);
+                fetch('upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert(data.message);
+                        postForm.reset();
+                        fileList.innerHTML = '';
+                        correctionList.innerHTML = '';
+                        window.location.reload(); 
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
             document.querySelectorAll('.supprimer-btn').forEach(item => {
                 item.addEventListener('click', event => {
                     const resourceId = item.dataset.id;
@@ -206,7 +223,6 @@
                         .then(response => response.json())
                         .then(data => {
                             console.log('Resource deleted:', data);
-                            
                             item.closest('tr').remove();
                         })
                         .catch(error => console.error('Error deleting resource:', error));
