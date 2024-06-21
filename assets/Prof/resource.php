@@ -65,7 +65,7 @@
                         <div class="branch-filter mt-10 mb-10">
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="all">Tous</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="exam">Examen National</button>
-                            <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="examP">Examen Passage</button>
+                            <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="examP">Examen de Passage</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="cour">Cour</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="ds">DS</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="tp">TP</button>
@@ -104,8 +104,11 @@
                                     echo "<tr data-type='" . $row["type"] . "'>";
                                     echo "<td>" . $row["type"] . "</td>";
                                     echo "<td>" . $row["titre"] . "</td>";
-                                    echo "<td><a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a></td>";
                                     echo "<td>";
+                                    if (!empty($row["fichier"])) {
+                                    echo "<a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a>";
+                                    echo "</td>";
+                                     } echo "<td>";
                                     if (!empty($row["correction"])) {
                                         echo "<a href='../uploadsfich/" . $row["correction"] . "' download>Télécharger</a>";
                                     }

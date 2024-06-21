@@ -1,10 +1,10 @@
 <?php
+// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "ebts";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
@@ -12,60 +12,62 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Fetch and sanitize form data
-    $resourceType = $_POST['resource-type'];
+    // Validate input
+    $formType = $_POST['resource-type'];
     $title = $_POST['title'];
-
-    // Handle resource file upload
+    
+    // Map form value to database value
+    $typeMapping = [
+        "exam" => "Examen National",
+        "examP" => "Examen de Passage",
+        "tp" => "TP",
+        "td" => "TD",
+        "ds" => "DS",
+        "cour" => "Cour"
+    ];
+    
+    if (array_key_exists($formType, $typeMapping)) {
+        $type = $typeMapping[$formType];
+    } else {
+        die("Invalid resource type.");
+    }
+    
+    // Handle file uploads
+    $resourceFile = $_FILES['resource-file'];
+    $correctionFile = $_FILES['correction-file'];
+    
     $resourceFileName = '';
-    if ($_FILES['resource-file']['size'] > 0) {
-        $resourceFile = $_FILES['resource-file'];
-        $resourceFileName = $resourceFile['name'];
-        $resourceFileTmp = $resourceFile['tmp_name'];
-        $uploadDir = '../uploadsfich/';
-
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        if (!move_uploaded_file($resourceFileTmp, $uploadDir . $resourceFileName)) {
-            echo json_encode(array("error" => "Erreur lors de l'upload du fichier."));
-            exit;
+    $correctionFileName = '';
+    
+    if ($resourceFile['error'] == UPLOAD_ERR_OK) {
+        $resourceFileName = basename($resourceFile['name']);
+        $targetPath = "../uploadsfich/" . $resourceFileName;
+        if (!move_uploaded_file($resourceFile['tmp_name'], $targetPath)) {
+            die("Error uploading resource file.");
         }
     }
-
-    // Handle correction file upload
-    $correctionFileName = '';
-    if ($_FILES['correction-file']['size'] > 0) {
-        $correctionFile = $_FILES['correction-file'];
-        $correctionFileName = $correctionFile['name'];
-        $correctionFileTmp = $correctionFile['tmp_name'];
-        $uploadDir = '../uploadsfich/';
-
-        if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0777, true);
-        }
-
-        if (!move_uploaded_file($correctionFileTmp, $uploadDir . $correctionFileName)) {
-            echo json_encode(array("error" => "Erreur lors de l'upload du fichier de correction."));
-            exit;
+    
+    if ($correctionFile['error'] == UPLOAD_ERR_OK) {
+        $correctionFileName = basename($correctionFile['name']);
+        $targetPath = "../uploadsfich/" . $correctionFileName;
+        if (!move_uploaded_file($correctionFile['tmp_name'], $targetPath)) {
+            die("Error uploading correction file.");
         }
     }
 
     // Insert into database
-    $sql = "INSERT INTO ressources (type, titre, fichier, correction, date) VALUES (?, ?, ?, ?, NOW())";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $resourceType, $title, $resourceFileName, $correctionFileName);
-
+    $stmt = $conn->prepare("INSERT INTO ressources (type, titre, fichier, correction, date) VALUES (?, ?, ?, ?, NOW())");
+    $stmt->bind_param("ssss", $type, $title, $resourceFileName, $correctionFileName);
+    
     if ($stmt->execute()) {
-        echo json_encode(array("message" => "Ressource publiée avec succès."));
+        echo json_encode(["message" => "Ressource uploaded successfully."]);
     } else {
-        echo json_encode(array("error" => "Erreur lors de la publication de la ressource: " . $stmt->error));
+        echo json_encode(["error" => "Error uploading resource: " . $stmt->error]);
     }
-
+    
     $stmt->close();
+    $conn->close();
 }
-
-$conn->close();
 ?>
