@@ -46,16 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         unlink($profile_image);
                     }
                     $profile_image = $uploaded_file;
-                    $toast_message = 'Image de profil mise à jour avec succès.';
-                    $toast_type = 'success';
+                    $_SESSION['toast_message'] = 'Image de profil mise à jour avec succès.';
+                    $_SESSION['toast_type'] = 'success';
                 }
             } else {
-                $toast_message = 'Le fichier existe déjà.';
-                $toast_type = 'warning';
+                $_SESSION['toast_message'] = 'Le fichier existe déjà.';
+                $_SESSION['toast_type'] = 'warning';
             }
         } else {
-            $toast_message = 'Seuls les fichiers JPEG et PNG sont autorisés.';
-            $toast_type = 'error';
+            $_SESSION['toast_message'] = 'Erreur lors de la mise à jour des informations.';
+            $_SESSION['toast_type'] = 'error';
         }
     }
 
@@ -100,6 +100,7 @@ $image_profil = isset($row['image_profil']) ? $row['image_profil'] : '../imgs/de
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <title>Profil</title>
 </head>
 
@@ -163,18 +164,23 @@ $image_profil = isset($row['image_profil']) ? $row['image_profil'] : '../imgs/de
             </div>
         </div>
     </div>
-    <?php if ($toast_message) : ?>
-        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <?php if (isset($_SESSION['toast_message']) && $_SESSION['toast_message']) : ?>
         <script>
-            Toastify({
-                text: "<?php echo $toast_message; ?>",
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: "right",
-                backgroundColor: "<?php echo $toast_type === 'success' ? '#4caf50' : ($toast_type === 'warning' ? '#ff9800' : '#f44336'); ?>",
-            }).showToast();
+            document.addEventListener('DOMContentLoaded', function() {
+                Toastify({
+                    text: "<?php echo $_SESSION['toast_message']; ?>",
+                    duration: 3000,
+                    close: true,
+                    gravity: "top",
+                    position: "center",
+                    backgroundColor: "<?php echo $_SESSION['toast_type'] === 'success' ? '#4caf50' : ($_SESSION['toast_type'] === 'warning' ? '#ff9800' : '#f44336'); ?>",
+                }).showToast();
+            });
         </script>
+        <?php 
+        unset($_SESSION['toast_message']);
+        unset($_SESSION['toast_type']);
+        ?>
     <?php endif; ?>
 </body>
 

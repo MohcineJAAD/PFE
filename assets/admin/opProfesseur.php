@@ -30,7 +30,7 @@
             </div>
             <div class="personne-page d-grid m-20 gap-20" id="teacher-list">
                 <?php
-                $query = "SELECT u.nom, u.prenom, u.identifiant, u.sexe, u.telephone, u.email, p.branche, p.section FROM utilisateurs u JOIN professeurs p ON u.identifiant = p.matricule WHERE u.role = 'prof'";
+                $query = "SELECT u.*, p.branche, p.section FROM utilisateurs u JOIN professeurs p ON u.identifiant = p.matricule WHERE u.role = 'prof'";
                 $result = $conn->query($query);
 
                 if ($result->num_rows > 0) {
@@ -39,10 +39,11 @@
                         $phone = $row['telephone'] ? $row['telephone'] : "N/A";
                         $email = $row['email'] ? $row['email'] : "N/A";
                         $branch = $row['branche'] ? $row['branche'] : "N/A";
+                        $image = $row['image_profil'];
                         $identifiant = urlencode($row['identifiant']);
                         echo "<div class='personne bg-fff rad-6 p-20 p-relative' data-branch='{$branch}'>
                                 <div class='txt-c'>
-                                    <img class='rad-half w-100 h-100' src='../imgs/default_avatar.png' alt='Prof Image'>
+                                    <img class='rad-half w-100 h-100' src='$image' alt='Prof Image'>
                                     <h4 class='m-0'>{$name}</h4>
                                 </div>
                                 <div class='info fs-14 p-relative'>

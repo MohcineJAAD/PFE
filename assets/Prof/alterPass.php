@@ -11,6 +11,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <title>Profil</title>
 </head>
 
@@ -18,23 +20,31 @@
     <div class="page d-flex">
         <?php require 'sidebar.php'; ?>
         <div class="content w-full">
-            <?php require '../admin/header.php'; ?>
+            <?php require 'header.php'; ?>
+            <?php
+                if (!isset($_SESSION['user_id'])) {
+                    header("location: ../../login.php");
+                }
+                $query = "SELECT mot_de_passe, image_profil FROM utilisateurs WHERE role = 'admin'";
+                $result = $conn->query($query);
+                $row = $result->fetch_assoc();
+            ?>
             <h1 class="p-relative">Changer le mot de passe</h1>
             <div class="profile-container m-20 bg-fff rad-10">
                 <div class="profile-header p-20">
-                    <img src="../imgs/default_avatar.png" alt="Image de Profil" class="profile-image m-0 mr-10">
+                    <img src="<?php echo $row['image_profil']; ?>" alt="Image de Profil" class="profile-image m-0 mr-10">
                     <div class="profile-info p-20">
                         <h3 class="profile-name m-0">Mohcine Jaad</h3>
                         <p class="profile-title mt-10">Directeur</p>
                     </div>
                 </div>
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data" class="p-20">
+                <form action="../php/updateP_Profile.php" method="POST" class="p-20">
                     <table class="profile-details">
                         <tr>
                             <th>Mot de passe</th>
                             <td>
                                 <div class="password-container">
-                                    <input type="password" name="motPass" id="pass">
+                                    <input type="password" name="motPass" id="pass" value="<?php echo $row['mot_de_passe']; ?>" disabled>
                                     <img src="../imgs/hide.png" class="toggle-password" id="eye-pass">
                                 </div>
                             </td>
@@ -58,7 +68,7 @@
                             </td>
                         </tr>
                     </table>
-                    <button type="submit" class="save-button">
+                    <button type="submit" class="save-button" name="alter">
                         <i class="fas fa-save"></i>Enregistrer
                     </button>
                 </form>
@@ -84,6 +94,29 @@
         togglePassword('pass', 'eye-pass');
         togglePassword('Npass', 'eye-Npass');
         togglePassword('Cpass', 'eye-Cpass');
+    </script>
+    <script>
+        <?php
+        if (isset($_SESSION['message'])) {
+            $status_message = $_SESSION['message'];
+            $status_type = $_SESSION['status'];
+            echo "showToast('$status_message', '$status_type');";
+            unset($_SESSION['message']);
+            unset($_SESSION['status']);
+        }
+        ?>
+
+        function showToast(message, type) {
+            Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                backgroundColor: type === "error" ? "#FF3030" : "#2F8C37",
+                stopOnFocus: true
+            }).showToast();
+        }
     </script>
 </body>
 

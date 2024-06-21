@@ -27,7 +27,7 @@
                     <?php
                         if (isset($_GET['id'])) {
                             $id = urldecode($_GET['id']);
-                            $stmt = $conn->prepare("SELECT u.nom, u.prenom, u.email, u.telephone, u.date_naissance, u.sexe, u.role, u.identifiant, u.mot_de_passe, u.image_profil, e.* FROM utilisateurs u JOIN etudiants e ON u.identifiant = e.CNE WHERE u.identifiant = ?");
+                            $stmt = $conn->prepare("SELECT u.*, e.* FROM utilisateurs u JOIN etudiants e ON u.identifiant = e.CNE WHERE u.identifiant = ?");
                             $stmt->bind_param("s", $id);
                             $stmt->execute();
                             $result = $stmt->get_result();

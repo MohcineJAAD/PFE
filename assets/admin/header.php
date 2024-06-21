@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require '../php/db_connect.php';
 
 // Check if the user is logged in

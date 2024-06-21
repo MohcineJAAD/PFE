@@ -25,7 +25,7 @@
                 if (!isset($_SESSION['user_id'])) {
                     header("location: ../../login.php");
                 }
-                $query = "SELECT mot_de_passe, image_profil FROM utilisateurs WHERE role = 'admin'";
+                $query = "SELECT mot_de_passe, image_profil, nom, prenom, role FROM utilisateurs WHERE id =".$_SESSION['user_id'];
                 $result = $conn->query($query);
                 $row = $result->fetch_assoc();
             ?>
@@ -34,8 +34,8 @@
                 <div class="profile-header p-20">
                     <img src="<?php echo $row['image_profil']; ?>" alt="Image de Profil" class="profile-image m-0 mr-10">
                     <div class="profile-info p-20">
-                        <h3 class="profile-name m-0">Mohcine Jaad</h3>
-                        <p class="profile-title mt-10">Directeur</p>
+                        <h3 class="profile-name m-0"><?php echo $row['prenom']." ".$row['nom'];?></h3>
+                        <p class="profile-title mt-10"><?php echo $row['role']?></p>
                     </div>
                 </div>
                 <form action="../php/updateP_Profile.php" method="POST" class="p-20">

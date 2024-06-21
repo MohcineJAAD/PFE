@@ -11,7 +11,7 @@ if (isset($_POST['alter'])) {
     $validNewPW = $_POST['cnewMotPass'];
 
     if ($newPW == $validNewPW) {
-        $query = "UPDATE utilisateurs SET mot_de_passe ='$newPW' WHERE role = 'admin'";
+        $query = "UPDATE utilisateurs SET mot_de_passe ='$newPW' WHERE id =".$_SESSION['user_id'];
         $conn->query($query);
         $_SESSION['message'] = "Le mots de passe a été mise à jour avec succès.";
         $_SESSION['status'] = "success";

@@ -65,7 +65,7 @@
                         <div class="branch-filter mt-10 mb-10">
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="all">Tous</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="exam">Examen National</button>
-                            <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="examP">Examen Passage</button>
+                            <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="Passage">Examen Passage</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="cour">Cour</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="ds">DS</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="tp">TP</button>
@@ -84,22 +84,7 @@
                             </tr>
                         </thead>
                         <tbody id="resourceTableBody">
-                            <?php
-                            
-                            $servername = "localhost";
-                            $username = "root";
-                            $password = "";
-                            $dbname = "ebts";
-
-                            
-                            $conn = new mysqli($servername, $username, $password, $dbname);
-
-                            
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
-
-                            
+                            <?php                            
                             $sql = "SELECT * FROM ressources";
                             $result = $conn->query($sql);
 
@@ -120,7 +105,7 @@
                                             <a href='#' class='supprimer-btn' data-id='" . $row["id"] . "'>
                                                 <span class='label btn-shape bg-f00'><i class='fa-solid fa-trash'></i></span>
                                             </a>
-                                          </td>";
+                                        </td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -147,7 +132,7 @@
             const resourceTableBody = document.getElementById('resourceTableBody');
 
             resourceType.addEventListener('change', (event) => {
-                const typesWithCorrection = ['exam', 'examP', 'tp', 'td', 'ds'];
+                const typesWithCorrection = ['Passage', 'examP', 'tp', 'td', 'ds'];
                 correctionField.style.display = typesWithCorrection.includes(event.target.value) ? 'block' : 'none';
             });
 
