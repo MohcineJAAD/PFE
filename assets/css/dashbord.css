@@ -485,6 +485,15 @@ ul {
 .horaire tbody tr:hover td {
     background-color: #faf7f7;
 }
+#absence-list #no-data-message td {
+    width: 100% !important;
+    max-width: none !important;
+    display: table-cell !important;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    padding: 15px;
+    text-align: center;
+}
 /* End Absence */
 /* Pub */
 form {

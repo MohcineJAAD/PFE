@@ -2,6 +2,11 @@
 require 'db_connect.php';
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header("location: ../../login.php");
+    exit();
+}
+
 function splitFullName($fullName) {
     $nameParts = explode(' ', $fullName);
     if (count($nameParts) < 2) {
