@@ -1,7 +1,38 @@
 <?php
+require '../php/db_connect.php';
+
+// Fetch subjects
 $mat = ["EDI", "MCOO", "GL", "FR", "SGBD", "POO", "ENG", "MATH", "GP", "QTM", "AR", "DEV WEB", "TEC", "C/S", "PFE"];
-$prof = ["Pr.EL FAJJAJ", "Pr.SALIHI", "Pr.OMAYMA CHEBBA", "Pr.DAHAR", "Pr.NAAIM", "Pr.EL GHANDOURI MOHAMED", "Pr.HAFID", "Pr.FATIMA ZOHRA"];
+$classes = ["1DSI", "2DSI", "1PME", "2PME"];
 $days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+
+// Fetch professors affiliated with each class
+$professorsByClass = [];
+foreach ($classes as $class) {
+    $profQuery = "SELECT p.id, CONCAT('Pr.', u.nom, ' ', u.prenom) as name, matricule 
+                  FROM professeurs p
+                  JOIN utilisateurs u ON p.matricule = u.identifiant
+                  WHERE branche LIKE '%$class%'";
+    $profResult = $conn->query($profQuery);
+    while ($row = $profResult->fetch_assoc()) {
+        $professorsByClass[$class][$row['matricule']] = ['id' => $row['id'], 'name' => $row['name']];
+    }
+}
+
+// Fetch schedule data from database
+$scheduleQuery = "SELECT h.*, CONCAT('Pr.', u.nom, ' ', u.prenom) as professor_name, p.matricule 
+                  FROM horaires h 
+                  JOIN professeurs p ON h.professeur_id = p.id 
+                  JOIN utilisateurs u ON p.matricule = u.identifiant";
+$result = $conn->query($scheduleQuery);
+$schedule = [];
+while ($row = $result->fetch_assoc()) {
+    $schedule[$row['classe']][$row['jour']][$row['heure_debut'] . '-' . $row['heure_fin']] = [
+        'subject' => $row['matiere'],
+        'professor' => $row['professor_name'],
+        'matricule' => $row['matricule']
+    ];
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,14 +57,15 @@ $days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
             <?php require 'header.php'; ?>
             <h1 class="p-relative">L'emploi du temps</h1>
             <div class="accordion-container">
-                <?php foreach (["1DSI", "2DSI", "1PME", "2PME"] as $class) : ?>
+                <?php foreach ($classes as $class) : ?>
                     <div class="accordion-item m-20">
                         <div class="accordion-header">
                             <span><?= $class ?></span>
                             <span class="toggle-icon">></span>
                         </div>
                         <div class="accordion-content">
-                            <form class="horaire responsive-table">
+                            <form class="horaire responsive-table" method="post" action="../php/opHoraire.php">
+                                <input type="hidden" name="class" value="<?= $class ?>">
                                 <table>
                                     <thead>
                                         <tr>
@@ -50,18 +82,30 @@ $days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
                                                 <th><?= $day ?></th>
                                                 <?php for ($i = 0; $i < 4; $i++) : ?>
                                                     <td colspan="2">
-                                                        <select class="subject" disabled>
+                                                        <?php
+                                                        $startTime = sprintf("%02d:00:00", 8 + $i * 2);
+                                                        $endTime = sprintf("%02d:00:00", 10 + $i * 2);
+                                                        $time = "$startTime-$endTime";
+                                                        $subject = $schedule[$class][$day][$time]['subject'] ?? '--';
+                                                        $professor = $schedule[$class][$day][$time]['professor'] ?? '--';
+                                                        $matricule = $schedule[$class][$day][$time]['matricule'] ?? '--';
+                                                        ?>
+                                                        <select name="subject[<?= $day ?>][<?= $time ?>]" class="subject" disabled>
+                                                            <option><?= $subject ?></option>
                                                             <option>--</option>
                                                             <?php foreach ($mat as $value) : ?>
                                                                 <option><?= $value ?></option>
                                                             <?php endforeach; ?>
                                                         </select>
-                                                        <select class="professor" disabled>
-                                                            <option>--</option>
-                                                            <?php foreach ($prof as $value) : ?>
-                                                                <option><?= $value ?></option>
+
+                                                        <select name="professor[<?= $day ?>][<?= $time ?>]" class="professor" disabled>
+                                                            <option value="<?= $matricule ?>"><?= $professor ?></option>
+                                                            <option value="--">--</option>
+                                                            <?php foreach ($professorsByClass[$class] as $matriculeKey => $value) : ?>
+                                                                <option value="<?= $matriculeKey ?>"><?= $value['name'] ?></option>
                                                             <?php endforeach; ?>
                                                         </select>
+                                                        <input type="hidden" name="matricule[<?= $day ?>][<?= $time ?>]" value="<?= $matricule ?>">
                                                     </td>
                                                 <?php endfor; ?>
                                             </tr>
@@ -70,8 +114,8 @@ $days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
                                 </table>
                                 <div class="action-buttons">
                                     <button type="button" class="edit-btn btn-shape mb-10"><i class="fas fa-edit"></i> Modifier</button>
-                                    <button type="button" class="save-btn btn-shape mb-10 hidden"><i class="fas fa-save"></i> Sauvegarder</button>
-                                    <button type="button" class="delete-btn btn-shape mb-10"><i class="fas fa-trash"></i> Supprimer</button>
+                                    <button type="submit" class="save-btn btn-shape mb-10 hidden"><i class="fas fa-save"></i> Sauvegarder</button>
+                                    <button type="submit" class="delete-btn btn-shape mb-10" name="delete" value="<?php echo $class; ?>"><i class="fas fa-trash"></i> Supprimer</button>
                                 </div>
                             </form>
                         </div>
@@ -127,21 +171,19 @@ $days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
                     saveBtn.style.display = 'inline-block'; // Show the save button
                 });
 
-                saveBtn.addEventListener('click', function() {
-                    selectElements.forEach(select => {
-                        select.disabled = true;
-                        select.classList.remove('editable');
-                    });
-                    saveBtn.style.display = 'none'; // Hide the save button
-                    editBtn.style.display = 'inline-block'; // Show the edit button
-                    deleteBtn.style.display = 'inline-block'; // Show the delete button
+                deleteBtn.addEventListener('click', function(event) {
+                        selectElements.forEach(select => {
+                            select.value = '--';
+                        });
+                        saveBtn.classList.remove('hidden'); // Show save button to confirm deletion
+                        editBtn.style.display = 'none'; // Hide edit button
+                        deleteBtn.style.display = 'none'; // Hide delete button
+                    // }
                 });
 
-                deleteBtn.addEventListener('click', function() {
-                    selectElements.forEach(select => {
-                        select.value = '--';
-                    });
-                });
+                // saveBtn.addEventListener('click', function() {
+                //     form.submit();
+                // });
             });
         });
     </script>
