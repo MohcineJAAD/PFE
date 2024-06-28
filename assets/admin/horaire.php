@@ -80,16 +80,19 @@ while ($row = $result->fetch_assoc()) {
                                         <?php foreach ($days as $day) : ?>
                                             <tr>
                                                 <th><?= $day ?></th>
-                                                <?php for ($i = 0; $i < 4; $i++) : ?>
+                                                <?php
+                                                $timeSlots = [
+                                                    "08:00:00-10:00:00",
+                                                    "10:00:00-12:00:00",
+                                                    "14:00:00-16:00:00",
+                                                    "16:00:00-18:00:00"
+                                                ];
+                                                foreach ($timeSlots as $time) :
+                                                    $subject = $schedule[$class][$day][$time]['subject'] ?? '--';
+                                                    $professor = $schedule[$class][$day][$time]['professor'] ?? '--';
+                                                    $matricule = $schedule[$class][$day][$time]['matricule'] ?? '--';
+                                                ?>
                                                     <td colspan="2">
-                                                        <?php
-                                                        $startTime = sprintf("%02d:00:00", 8 + $i * 2);
-                                                        $endTime = sprintf("%02d:00:00", 10 + $i * 2);
-                                                        $time = "$startTime-$endTime";
-                                                        $subject = $schedule[$class][$day][$time]['subject'] ?? '--';
-                                                        $professor = $schedule[$class][$day][$time]['professor'] ?? '--';
-                                                        $matricule = $schedule[$class][$day][$time]['matricule'] ?? '--';
-                                                        ?>
                                                         <select name="subject[<?= $day ?>][<?= $time ?>]" class="subject" disabled>
                                                             <option><?= $subject ?></option>
                                                             <option>--</option>
@@ -107,7 +110,7 @@ while ($row = $result->fetch_assoc()) {
                                                         </select>
                                                         <input type="hidden" name="matricule[<?= $day ?>][<?= $time ?>]" value="<?= $matricule ?>">
                                                     </td>
-                                                <?php endfor; ?>
+                                                <?php endforeach; ?>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>
@@ -172,18 +175,13 @@ while ($row = $result->fetch_assoc()) {
                 });
 
                 deleteBtn.addEventListener('click', function(event) {
-                        selectElements.forEach(select => {
-                            select.value = '--';
-                        });
-                        saveBtn.classList.remove('hidden'); // Show save button to confirm deletion
-                        editBtn.style.display = 'none'; // Hide edit button
-                        deleteBtn.style.display = 'none'; // Hide delete button
-                    // }
+                    selectElements.forEach(select => {
+                        select.value = '--';
+                    });
+                    saveBtn.classList.remove('hidden'); // Show save button to confirm deletion
+                    editBtn.style.display = 'none'; // Hide edit button
+                    deleteBtn.style.display = 'none'; // Hide delete button
                 });
-
-                // saveBtn.addEventListener('click', function() {
-                //     form.submit();
-                // });
             });
         });
     </script>

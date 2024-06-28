@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $endTime = $timeRange[1];
                 $matricule = $_POST['professor'][$day][$time];
 
-                if ($subject === '--' || $matricule === '--') {
-                    // Delete entry if either subject or professor is "--"
-                    $query = "DELETE FROM horaires WHERE classe = ? AND jour = ? AND heure_debut = ? AND heure_fin = ?";
-                    $stmt = $conn->prepare($query);
-                    $stmt->bind_param("ssss", $class, $day, $startTime, $endTime);
-                    $stmt->execute();
-                    $stmt->close();
-                } else {
+                // Delete any existing entry for this class, day, and time slot
+                $query = "DELETE FROM horaires WHERE classe = ? AND jour = ? AND heure_debut = ? AND heure_fin = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("ssss", $class, $day, $startTime, $endTime);
+                $stmt->execute();
+                $stmt->close();
+
+                if ($subject !== '--' && $matricule !== '--') {
                     // Get professor ID
                     $professorIdQuery = "SELECT id FROM professeurs WHERE matricule = ?";
                     $stmt = $conn->prepare($professorIdQuery);
@@ -38,10 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmt->close();
 
                     if ($professorId) {
-                        // Insert or update schedule
+                        // Insert new schedule
                         $query = "INSERT INTO horaires (classe, periode, matiere, professeur_id, jour, heure_debut, heure_fin) 
-                                  VALUES (?, ?, ?, ?, ?, ?, ?)
-                                  ON DUPLICATE KEY UPDATE matiere = VALUES(matiere), professeur_id = VALUES(professeur_id)";
+                                  VALUES (?, ?, ?, ?, ?, ?, ?)";
                         $stmt = $conn->prepare($query);
                         $stmt->bind_param("sssisss", $class, $time, $subject, $professorId, $day, $startTime, $endTime);
                         $stmt->execute();

@@ -1,6 +1,76 @@
 <?php
-$mat = ["EDI", "MCOO", "GL", "FR", "SGBD", "POO", "ENG", "MATH", "GP", "QTM", "AR", "DEV WEB", "TEC", "C/S", "PFE"];
+// Start session
+session_start();
+
+require "../php/db_connect.php";
+
+// Retrieve user ID from the session
+$user_id = $_SESSION['user_id'];
+
+// Step 1: Select the identifier from utilisateurs where id = $user_id
+$sql = "SELECT identifiant FROM utilisateurs WHERE id = $user_id";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $identifier = $row['identifiant'];
+    
+    // Step 2: Select the id from professeur where matricule = identifier
+    $sql = "SELECT id FROM professeurs WHERE matricule = '$identifier'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $professeur_id = $row['id'];
+        
+        // Step 3: Select all rows related to this professor ID from the 'horaires' table
+        $sql = "SELECT * FROM horaires WHERE professeur_id = $professeur_id";
+        $result = $conn->query($sql);
+
+        // Initialize an array to hold the schedule
+        $schedule = array(
+            'lundi' => array_fill(0, 8, ''),
+            'mardi' => array_fill(0, 8, ''),
+            'mercredi' => array_fill(0, 8, ''),
+            'jeudi' => array_fill(0, 8, ''),
+            'vendredi' => array_fill(0, 8, ''),
+            'samedi' => array_fill(0, 8, '')
+        );
+
+        // Populate the schedule array with data from the database
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $day = $row['jour'];
+                $start_hour = intval(explode(':', $row['heure_debut'])[0]);
+                
+                // Determine the time slot index
+                if ($start_hour == 8) {
+                    $index = 0;
+                } elseif ($start_hour == 10) {
+                    $index = 2;
+                } elseif ($start_hour == 14) {
+                    $index = 4;
+                } elseif ($start_hour == 16) {
+                    $index = 6;
+                } else {
+                    continue; // skip times that don't match any slot
+                }
+                
+                $schedule[$day][$index] = $row['matiere'];
+            }
+        } else {
+            echo "No records found";
+        }
+    } else {
+        echo "No professor found for the given identifier";
+    }
+} else {
+    echo "No user found with the given ID";
+}
+
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,15 +108,18 @@ $mat = ["EDI", "MCOO", "GL", "FR", "SGBD", "POO", "ENG", "MATH", "GP", "QTM", "A
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
+                            <?php
                             $days = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
                             foreach ($days as $day) {
                                 echo "<tr>";
                                 echo "<th>$day</th>";
-                                for ($i = 0; $i < 4; $i++) {
-                                    echo "<td colspan='2' class='class-cell'>".$mat[$i]."</td>";
-                                    echo "<td colspan='2' class='class-cell empty'></td>";
-                                    $i++;
+                                for ($i = 0; $i < 8; $i += 2) {
+                                    $class = $schedule[$day][$i];
+                                    if ($class == '') {
+                                        echo "<td colspan='2' class='class-cell empty'></td>";
+                                    } else {
+                                        echo "<td colspan='2' class='class-cell'>$class</td>";
+                                    }
                                 }
                                 echo "</tr>";
                             }
