@@ -30,7 +30,16 @@
                 </form>
         </div>
             <?php
-            require "assets/php/db_connect.php";
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "ebts";
+
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
 
             $limit = 8;
             $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -52,7 +61,7 @@
                 while ($row = $result->fetch_assoc()) {
                     ?>
                     <div class="card">
-                        <div style="flex: 0 0 35%; background: url('<?php echo $row['image']; ?>') no-repeat center center; background-size: cover;"></div>
+                        <div style="flex: 0 0 35%; background: url('assets/admin/<?php echo $row['image']; ?>') no-repeat center center; background-size: cover;"></div>
                         <div style="flex: 0 0 50%;">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $row['objet']; ?></h5>
