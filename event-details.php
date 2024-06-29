@@ -140,7 +140,7 @@
                 $row = $result->fetch_assoc();
                 ?>
                 <div class="card">
-                    <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['objet']; ?>">
+                    <img src="assets/admin/<?php echo $row['image']; ?>" alt="<?php echo $row['objet']; ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['objet']; ?></h5>
                         <p class="card-text"><?php echo $row['content']; ?></p>
@@ -181,7 +181,7 @@
             while ($row = $result->fetch_assoc()) {
                 ?>
                 <div class="card">
-                    <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['objet']; ?>">
+                    <img src="assets/admin/<?php echo $row['image']; ?>" alt="<?php echo $row['objet']; ?>">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['objet']; ?></h5>
                         <p class="card-text"><?php echo substr($row['content'], 0, 100); ?>...</p>
