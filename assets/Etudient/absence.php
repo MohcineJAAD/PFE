@@ -1,3 +1,45 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("location: ../../login.php");
+    exit();
+}
+require "../php/db_connect.php";
+
+// Use prepared statements to prevent SQL injection
+$stmt = $conn->prepare("SELECT identifiant FROM utilisateurs WHERE id = ?");
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$res1 = $stmt->get_result();
+$row = $res1->fetch_assoc();
+$id = $row['identifiant'];
+
+$stmt2 = $conn->prepare("SELECT * FROM absences WHERE etudiant_id = ?");
+$stmt2->bind_param("s", $id);
+$stmt2->execute();
+$res = $stmt2->get_result();
+
+// Calculate sum of absence hours, count of justified absences, and count of unjustified absences
+$stmt3 = $conn->prepare("SELECT 
+    SUM(heures_absence) AS sumHa,
+    COUNT(CASE WHEN justification IS NOT NULL THEN 1 END) AS justifiedCount,
+    COUNT(CASE WHEN justification IS NULL THEN 1 END) AS unjustifiedCount,
+    MAX(first_warning_sent) AS first_warning_sent,
+    MAX(second_warning_sent) AS second_warning_sent
+FROM absences WHERE etudiant_id = ?");
+$stmt3->bind_param("s", $id);
+$stmt3->execute();
+$res3 = $stmt3->get_result();
+$summary = $res3->fetch_assoc();
+
+// Determine the warning status
+$warning = 'Aucun avertissement';
+if ($summary['second_warning_sent'] == 1) {
+    $warning = 'Deuxième avertissement';
+} elseif ($summary['first_warning_sent'] == 1) {
+    $warning = 'Premier avertissement';
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -24,9 +66,10 @@
                 <h2 class="mt-0 mb-20">Liste des absences</h2>
                 <div class="absence-summary p-20">
                     <h3>Résumé des absences</h3>
-                    <p>Total d'absences: <span>3</span></p>
-                    <p>Absences justifiées: <span>2</span></p>
-                    <p>Absences non justifiées: <span>1</span></p>
+                    <p>Total d'heures d'absences: <span><?php echo htmlspecialchars($summary['sumHa']); ?></span></p>
+                    <p>Absences justifiées: <span><?php echo htmlspecialchars($summary['justifiedCount']); ?></span></p>
+                    <p>Absences non justifiées: <span><?php echo htmlspecialchars($summary['unjustifiedCount']); ?></span></p>
+                    <p>Avertissement: <span><?php echo htmlspecialchars($warning); ?></span></p>
                 </div>
                 <div class="responsive-table">
                     <table class="fs-15 w-full" id="absence-list">
@@ -39,24 +82,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2024-06-01</td>
-                                <td>Matin</td>
-                                <td>1</td>
-                                <td>Certificat médical</td>
-                            </tr>
-                            <tr>
-                                <td>2024-06-15</td>
-                                <td>Matin</td>
-                                <td>1</td>
-                                <td>Aucune</td>
-                            </tr>
-                            <tr>
-                                <td>2024-07-02</td>
-                                <td>Matin</td>
-                                <td>1</td>
-                                <td>Certificat médical</td>
-                            </tr>
+                            <?php while($row = $res->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($row['date']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['periode']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['heures_absence']); ?></td>
+                                    <td><?php echo htmlspecialchars($row['justification'] ? $row['justification'] : "Non justifiée"); ?></td>
+                                </tr>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 </div>

@@ -43,7 +43,6 @@ session_start();
                         Connexion réservée aux étudiants en BTS uniquement
                     </p>
                     <input type="submit" value="Se connecter" class="btn">
-                    <p class="login-prob">Si vous rencontrez un problème lors de la connexion, veuillez <span>cliquer içi</span></p>
                 </form>
             </div>
         </div>

@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("location: ../../login.php");
+    }
+    require "../php/db_connect.php";
+    $res = $conn->query("SELECT examens.*, modules.name FROM examens
+                         JOIN modules ON examens.module_id = modules.id");
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -25,55 +34,20 @@
             <div class="p-20 bg-fff rad-10 m-20">
                 <h2 class="mt-20 mb-20">Liste des DS</h2>
                 <div class="test-list" id="test-list">
-                    <div class="test-item">
-                        <span class="test-date">24/7/2004</span>
-                        <span class="test-name">DAI</span>
-                    </div>
-                    <div class="test-item">
-                        <span class="test-date">24/7/2004</span>
-                        <span class="test-name">DAI</span>
-                    </div>
-                    <div class="test-item">
-                        <span class="test-date">24/7/2004</span>
-                        <span class="test-name">DAI</span>
-                    </div>
+                    <?php
+                        while ($row = $res->fetch_assoc())
+                        {
+                            $da = $row['date_test'];
+                            $na = $row['name'];
+                            echo "<div class='test-item'>";
+                                echo "<span class='test-date'>$da</span>";
+                                echo "<span class='test-name'>$na</span>";
+                            echo "</div>";
+                        }
+                    ?>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        function addTest() {
-            const testSubjectSelect = document.getElementById('test-subject');
-            const testDateInput = document.getElementById('test-date');
-            const testList = document.getElementById('test-list');
-
-            const testSubject = testSubjectSelect.value;
-            const testDate = testDateInput.value;
-
-            if (testSubject && testDate) {
-                const testItem = document.createElement('div');
-                testItem.className = 'test-item';
-                testItem.innerHTML = `
-                    <span class="test-date">${testDate}</span>
-                    <span class="test-name">${testSubject}</span>
-                    <button class="remove-btn" onclick="removeTest(this)">Supprimer</button>
-                `;
-
-                testList.appendChild(testItem);
-
-                testSubjectSelect.value = '';
-                testDateInput.value = '';
-            } else {
-                alert('Veuillez choisir un sujet et une date de test.');
-            }
-
-            return false;
-        }
-
-        function removeTest(button) {
-            const testItem = button.parentElement;
-            testItem.remove();
-        }
-    </script>
 </body>
 </html>

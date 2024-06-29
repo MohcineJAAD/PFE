@@ -1,26 +1,26 @@
 <?php
-// Start session
+// Démarrer la session
 session_start();
 
 require "../php/db_connect.php";
 
-// Retrieve user ID from the session
-$user_id = $_SESSION['user_id'];
+// Récupérer l'ID utilisateur de la session
+$id = $_SESSION['user_id'];
 
-// Get the user's identifier
-$res = $conn->query("SELECT identifiant FROM utilisateurs WHERE id = $user_id");
+// Obtenir l'identifiant de l'utilisateur
+$res = $conn->query("SELECT identifiant FROM utilisateurs WHERE id = $id");
 $row1 = $res->fetch_assoc();
-$user_id = $row1['identifiant'];
+$id = $row1['identifiant'];
 
-// Get the student's level
-$sql = "SELECT niveau FROM etudiants WHERE CNE = '$user_id'";
+// Obtenir le niveau de l'étudiant
+$sql = "SELECT niveau FROM etudiants WHERE CNE = '$id'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $niveau = $row['niveau'];
 
-    // Select all schedule rows for the student's class, including the professor's name
+    // Sélectionner toutes les lignes de l'emploi du temps de la classe de l'étudiant, y compris le nom du professeur
     $sql = "SELECT h.*, concat('Pr.', prenom, ' ', nom) AS professeur_nom 
             FROM horaires h 
             JOIN professeurs p ON h.professeur_id = p.id 
@@ -28,7 +28,7 @@ if ($result->num_rows > 0) {
             WHERE h.classe = '$niveau'";
     $result = $conn->query($sql);
 
-    // Initialize an array to hold the schedule
+    // Initialiser un tableau pour contenir l'emploi du temps
     $schedule = array(
         'lundi' => array_fill(0, 8, ''),
         'mardi' => array_fill(0, 8, ''),
@@ -38,13 +38,13 @@ if ($result->num_rows > 0) {
         'samedi' => array_fill(0, 8, '')
     );
 
-    // Populate the schedule array with data from the database
+    // Remplir le tableau de l'emploi du temps avec les données de la base de données
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             $day = $row['jour'];
             $start_hour = intval(explode(':', $row['heure_debut'])[0]);
 
-            // Determine the time slot index
+            // Déterminer l'index de la tranche horaire
             if ($start_hour == 8) {
                 $index = 0;
             } elseif ($start_hour == 10) {
@@ -54,24 +54,34 @@ if ($result->num_rows > 0) {
             } elseif ($start_hour == 16) {
                 $index = 6;
             } else {
-                continue; // skip times that don't match any slot
+                continue; // ignorer les heures qui ne correspondent à aucune tranche
             }
 
             $class_info = $row['matiere'] . " <br> " . $row['professeur_nom'];
             $schedule[$day][$index] = $class_info;
         }
     } else {
-        echo "No records found";
+        echo "Aucun enregistrement trouvé";
     }
+
+    // Vérifier les avertissements
+    $stmt = $conn->prepare("SELECT MAX(first_warning_sent) AS first_warning_sent, MAX(second_warning_sent) AS second_warning_sent FROM absences WHERE etudiant_id = ?");
+    $stmt->bind_param("s", $id);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $warning_summary = $res->fetch_assoc();
+    $first_warning_sent = $warning_summary['first_warning_sent'];
+    $second_warning_sent = $warning_summary['second_warning_sent'];
+
 } else {
-    echo "No student found with the given ID";
+    echo "Aucun étudiant trouvé avec l'ID donné";
 }
 
 $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -84,7 +94,7 @@ $conn->close();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet" />
-    <title>Dashboard</title>
+    <title>Tableau de bord</title>
 </head>
 
 <body>
@@ -92,9 +102,9 @@ $conn->close();
         <?php require 'sidebar.php'; ?>
         <div class="content w-full">
             <?php require '../admin/header.php'; ?>
-            <h1 class="p-relative">Dashboard</h1>
+            <h1 class="p-relative">Tableau de bord</h1>
             <div class="horaire p-20 bg-fff rad-10 m-20">
-                <h2 class="mt-0 mb-20">Emploi temp</h2>
+                <h2 class="mt-0 mb-20">Emploi du temps</h2>
                 <div class="responsive-table rad-10">
                     <table class="fs-15 w-full">
                         <thead>
@@ -129,6 +139,53 @@ $conn->close();
             </div>
         </div>
     </div>
+
+    <!-- Le Modal -->
+    <div id="warningModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 style="color: #ff9800;"><i class="fa-solid fa-triangle-exclamation" style="font-size: 64px;"></i> Attention!</h2>
+            <p id="warningMessage" style="font-size: larger;">
+                <?php 
+                    if ($second_warning_sent == 1) {
+                        echo "Vous avez reçu votre deuxième avertissement.";
+                    } elseif ($first_warning_sent == 1) {
+                        echo "Vous avez reçu votre premier avertissement.";
+                    }
+                ?>
+            </p>
+            <form method="POST" action="../php/acknowledge_warning.php">
+                <input type="hidden" name="user_id" value="<?php echo $id; ?>">
+                <input type="hidden" name="warning_type" value="<?php echo $second_warning_sent == 1 ? 'second' : 'first'; ?>">
+                <button type="submit" class="btn-shape color-fff" style="background-color: #ff9800;"><i class="fas fa-check"></i> Accuser réception</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Obtenir le modal
+        var modal = document.getElementById("warningModal");
+
+        // Obtenir l'élément <span> qui ferme le modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // Afficher le modal s'il y a un avertissement
+        <?php if ($first_warning_sent == 1 || $second_warning_sent == 1): ?>
+            modal.style.display = "block";
+        <?php endif; ?>
+
+        // Lorsque l'utilisateur clique sur <span> (x), fermer le modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // Lorsque l'utilisateur clique n'importe où en dehors du modal, fermer le modal
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

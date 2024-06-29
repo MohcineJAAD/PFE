@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['user_id'])) {
+        header("location: ../../login.php");
+    }
+    require "../php/db_connect.php";
+    $res = $conn->query("SELECT * FROM ressources");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,40 +44,21 @@
                     <table class="fs-15 w-full" id="absence-list">
                         <thead>
                             <tr>
-                                <th>Type</th>
                                 <th>Titre</th>
                                 <th>Fichier</th>
                                 <th>Correction</th>
                                 <th>Date</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="resourceTableBody">
-                            <tr data-type="exam">
-                                <td>Examen National</td>
-                                <td>Mathématiques 2024</td>
-                                <td><a href="#">Télécharger</a></td>
-                                <td><a href="#">Télécharger</a></td>
-                                <td>2024-06-03</td>
-                                <td>
-                                    <a href="#" class="supprimer-btn" data-id="1">
-                                        <span class="label btn-shape bg-f00"><i class="fa-solid fa-trash"></i></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr data-type="tp">
-                                <td>TP</td>
-                                <td>Physique 2024</td>
-                                <td><a href="#">Télécharger</a></td>
-                                <td></td>
-                                <td>2024-06-04</td>
-                                <td>
-                                    <a href="#" class="supprimer-btn" data-id="2">
-                                        <span class="label btn-shape bg-f00"><i class="fa-solid fa-trash"></i></span>
-                                    </a>
-                                </td>
-                            </tr>
-                            <!-- Add more rows as needed -->
+                            <?php while ($row = $res->fetch_assoc()): ?>
+                                <tr data-type="<?= $row['type'] ?>">
+                                    <td><?= $row['titre'] ?></td>
+                                    <td><?= $row['fichier'] ? "<a href='../resources/{$row['fichier']}'>Télécharger</a>" : "--" ?></td>
+                                    <td><?= $row['correction'] ? "<a href='../resources/{$row['correction']}'>Télécharger</a>" : "--" ?></td>
+                                    <td><?= $row['date'] ?></td>
+                                </tr>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 </div>
@@ -79,37 +68,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const resourceType = document.getElementById('resource-type');
-            const correctionField = document.getElementById('correction-field');
-            const fileUpload = document.getElementById('file-upload');
-            const fileList = document.getElementById('fileList');
-            const correctionUpload = document.getElementById('correction-upload');
-            const correctionList = document.getElementById('correctionList');
             const filterButtons = document.querySelectorAll('.filter-btn');
             const resourceTableBody = document.getElementById('resourceTableBody');
-
-            resourceType.addEventListener('change', (event) => {
-                const typesWithCorrection = ['exam', 'examP', 'tp', 'td', 'ds'];
-                correctionField.style.display = typesWithCorrection.includes(event.target.value) ? 'block' : 'none';
-            });
-
-            fileUpload.addEventListener('change', () => {
-                fileList.innerHTML = '';
-                Array.from(fileUpload.files).forEach(file => {
-                    const fileItem = document.createElement('div');
-                    fileItem.textContent = file.name;
-                    fileList.appendChild(fileItem);
-                });
-            });
-
-            correctionUpload.addEventListener('change', () => {
-                correctionList.innerHTML = '';
-                Array.from(correctionUpload.files).forEach(file => {
-                    const fileItem = document.createElement('div');
-                    fileItem.textContent = file.name;
-                    correctionList.appendChild(fileItem);
-                });
-            });
 
             filterButtons.forEach(button => {
                 button.addEventListener('click', () => {

@@ -15,7 +15,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 <li><a href="resources.php" class="<?php echo $current_page == 'resources.php' ? 'enable active' : 'enable'; ?>">RESOURCES</a></li>
                 <li><a href="contact.php" class="<?php echo $current_page == 'contact.php' ? 'enable active' : 'enable'; ?>">CONTACT</a></li>
 
-                <li><a href="event.php" class="<?php echo $current_page == 'event.php' ? 'enable active' : 'enable'; ?>">Événements</a></li>
+                <li><a href="event.php" class="<?php echo $current_page == 'event.php' ? 'enable active' : 'enable'; ?>">ÉVÉNEMENTS</a></li>
             </ul>
         </nav>
 
