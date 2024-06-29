@@ -88,18 +88,7 @@
                         <tbody id="resourceTableBody">
                             <?php
                             
-                            $servername = "localhost";
-                            $username = "root";
-                            $password = "";
-                            $dbname = "ebts";
-
-                            
-                            $conn = new mysqli($servername, $username, $password, $dbname);
-
-                            
-                            if ($conn->connect_error) {
-                                die("Connection failed: " . $conn->connect_error);
-                            }
+                            require "../php/db_connect.php";
 
                             
                             $sql = "SELECT * FROM ressources";
@@ -112,12 +101,12 @@
                                     echo "<td>" . $row["titre"] . "</td>";
                                     echo "<td>";
                                     if (!empty($row["fichier"])) {
-                                        echo "<a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a>";
+                                        echo "<a href='../resources/" . $row["fichier"] . "' download>Télécharger</a>";
                                     }
                                     echo "</td>";
                                     echo "<td>";
                                     if (!empty($row["correction"])) {
-                                        echo "<a href='../uploadsfich/" . $row["correction"] . "' download>Télécharger</a>";
+                                        echo "<a href='../resources/" . $row["correction"] . "' download>Télécharger</a>";
                                     }
                                     echo "</td>";
                                     echo "<td>" . $row["date"] . "</td>";
