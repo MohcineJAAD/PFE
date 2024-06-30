@@ -75,14 +75,16 @@
                                     echo "<td>" . ($row['justification'] ? $row['justification'] : "Non") . "</td>";
                                     $id = $row['absence_id'];
                                     $date = $row['date'];
+                                    $first_warning_sent = $row['first_warning_sent'];
+                                    $second_warning_sent = $row['second_warning_sent'];
                                     echo "<td>
                                             <a href='../php/delete_absence.php?id=$id&date=$date' class='supprimer-btn' data-id='" . $row['absence_id'] . "'><span class='label btn-shape bg-f00'>Supprimer</span></a>
                                             <a href='#' class='justification-btn' data-id='" . $row['absence_id'] . "' data-date='" . $row['date'] . "'><span class='label btn-shape bg-green'>Justification</span></a>";
 
-                                    if ($total_heures_absence >= 8 && $total_heures_absence < 16) {
+                                    if ($total_heures_absence >= 8 && $total_heures_absence < 16 && $first_warning_sent == 1) {
                                         echo "<a href='../php/send_warning.php?id=" . $row['CNE'] . "&warning=1' class='avertissement-btn' data-id='" . $row['CNE'] . "'><span class='label btn-shape bg-ffa500'>1er Avertissement</span></a>";
                                     }
-                                    if ($total_heures_absence >= 16 && $total_heures_absence < 24) {
+                                    if ($total_heures_absence >= 16 && $total_heures_absence < 24 && $second_warning_sent == 1) {
                                         echo "<a href='../php/send_warning.php?id=" . $row['CNE'] . "&warning=2' class='avertissement-btn' data-id='" . $row['CNE'] . "'><span class='label btn-shape bg-ffa500'>2eme Avertissement</span></a>";
                                     }
                                     if ($total_heures_absence >= 24) {

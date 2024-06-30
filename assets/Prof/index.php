@@ -58,9 +58,7 @@ if ($result->num_rows > 0) {
                 
                 $schedule[$day][$index] = $row['matiere'];
             }
-        } else {
-            echo "No records found";
-        }
+        } 
     } else {
         echo "No professor found for the given identifier";
     }

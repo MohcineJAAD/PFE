@@ -60,9 +60,7 @@ if ($result->num_rows > 0) {
             $class_info = $row['matiere'] . " <br> " . $row['professeur_nom'];
             $schedule[$day][$index] = $class_info;
         }
-    } else {
-        echo "Aucun enregistrement trouvé";
-    }
+    } 
 
     // Vérifier les avertissements
     $stmt = $conn->prepare("SELECT MAX(first_warning_sent) AS first_warning_sent, MAX(second_warning_sent) AS second_warning_sent FROM absences WHERE etudiant_id = ?");

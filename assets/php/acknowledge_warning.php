@@ -19,7 +19,7 @@ $stmt->bind_param("s", $user_id);
 $stmt->execute();
 
 header("Location: ../Etudient/index.php");
-echo $user_id;
+
 
 $stmt->close();
 $conn->close();

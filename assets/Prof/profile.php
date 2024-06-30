@@ -3,7 +3,7 @@ session_start();
 require '../php/db_connect.php';
 
 if (!isset($_SESSION['user_id'])) {
-    die("User not logged in.");
+    header("../../login.php");
 }
 
 $toast_message = '';
