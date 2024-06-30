@@ -11,8 +11,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <title>Professeur</title>
 </head>
 
@@ -26,7 +24,7 @@
                 <div class="pub-form">
                     <div class="post-creation">
                         <h2 class="mt-0 mb-20">Uploader une Nouvelle Ressource</h2>
-                        <form id="postForm" method="POST" enctype="multipart/form-data" action="../php/opResource.php">
+                        <form id="postForm" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="resource-type">Type de Ressource</label>
                                 <select id="resource-type" class="privacy-setting" name="resource-type">
@@ -45,13 +43,13 @@
                             </div>
                             <div class="add-media">
                                 <label for="file-upload">Ajouter fichier</label>
-                                <input id="file-upload" type="file" name="resource-file[]" multiple>
+                                <input id="file-upload" type="file" name="resource-file" multiple>
                                 <div id="fileList"></div>
                             </div>
                             <div class="add-media" id="correction-field" style="display: none;">
                                 <h3>Uploader correction</h3>
                                 <label for="correction-upload">Ajouter fichier de correction</label>
-                                <input id="correction-upload" type="file" name="correction-file[]" multiple>
+                                <input id="correction-upload" type="file" name="correction-file" multiple>
                                 <div id="correctionList"></div>
                             </div>
                             <button type="submit">Publier</button>
@@ -67,7 +65,7 @@
                         <div class="branch-filter mt-10 mb-10">
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="all">Tous</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="exam">Examen National</button>
-                            <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="examP">Examen Passage</button>
+                            <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="examP">Examen de Passage</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="cour">Cour</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="ds">DS</button>
                             <button class="btn-shape bg-c-60 color-fff filter-btn" data-branch="tp">TP</button>
@@ -87,10 +85,17 @@
                         </thead>
                         <tbody id="resourceTableBody">
                             <?php
-                            
-                            require "../php/db_connect.php";
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $dbname = "ebts";
 
-                            
+                            $conn = new mysqli($servername, $username, $password, $dbname);
+
+                            if ($conn->connect_error) {
+                                die("Connection failed: " . $conn->connect_error);
+                            }
+
                             $sql = "SELECT * FROM ressources";
                             $result = $conn->query($sql);
 
@@ -101,20 +106,19 @@
                                     echo "<td>" . $row["titre"] . "</td>";
                                     echo "<td>";
                                     if (!empty($row["fichier"])) {
-                                        echo "<a href='../resources/" . $row["fichier"] . "' download>Télécharger</a>";
-                                    }
+                                    echo "<a href='../uploadsfich/" . $row["fichier"] . "' download>Télécharger</a>";
                                     echo "</td>";
-                                    echo "<td>";
+                                     } echo "<td>";
                                     if (!empty($row["correction"])) {
-                                        echo "<a href='../resources/" . $row["correction"] . "' download>Télécharger</a>";
+                                        echo "<a href='../uploadsfich/" . $row["correction"] . "' download>Télécharger</a>";
                                     }
                                     echo "</td>";
                                     echo "<td>" . $row["date"] . "</td>";
                                     echo "<td>
-                                            <a href='../php/deleteResource.php?id=" . $row["id"] . "' class='supprimer-btn' data-id='" . $row["id"] . "' >
+                                            <a href='#' class='supprimer-btn' data-id='" . $row["id"] . "'>
                                                 <span class='label btn-shape bg-f00'><i class='fa-solid fa-trash'></i></span>
                                             </a>
-                                        </td>";
+                                          </td>";
                                     echo "</tr>";
                                 }
                             } else {
@@ -139,6 +143,7 @@
             const correctionList = document.getElementById('correctionList');
             const filterButtons = document.querySelectorAll('.filter-btn');
             const resourceTableBody = document.getElementById('resourceTableBody');
+            const postForm = document.getElementById('postForm');
 
             resourceType.addEventListener('change', (event) => {
                 const typesWithCorrection = ['exam', 'examP', 'tp', 'td', 'ds'];
@@ -183,30 +188,51 @@
                     }
                 });
             }
-        });
-    </script>
-    <script>
-        <?php
-        if (isset($_SESSION['message'])) {
-            $status_message = $_SESSION['message'];
-            $status_type = $_SESSION['status'];
-            echo "showToast('$status_message', '$status_type');";
-            unset($_SESSION['message']);
-            unset($_SESSION['status']);
-        }
-        ?>
 
-        function showToast(message, type) {
-            Toastify({
-                text: message,
-                duration: 3000,
-                close: true,
-                gravity: "top",
-                position: "center",
-                backgroundColor: type === "error" ? "#FF3030" : "#2F8C37",
-                stopOnFocus: true
-            }).showToast();
-        }
+            postForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const formData = new FormData(postForm);
+                fetch('upload.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        alert(data.message);
+                        postForm.reset();
+                        fileList.innerHTML = '';
+                        correctionList.innerHTML = '';
+                        window.location.reload(); 
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+
+            document.querySelectorAll('.supprimer-btn').forEach(item => {
+                item.addEventListener('click', event => {
+                    const resourceId = item.dataset.id;
+                    if (confirm("Êtes-vous sûr de vouloir supprimer cette ressource ?")) {
+                        fetch('delete.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ id: resourceId })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Resource deleted:', data);
+                            item.closest('tr').remove();
+                        })
+                        .catch(error => console.error('Error deleting resource:', error));
+                    }
+                });
+            });
+        });
     </script>
 </body>
 
